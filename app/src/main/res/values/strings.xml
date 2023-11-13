@@ -22,5 +22,9 @@
     <string name="fragment_job_name">Chụp hình cưới</string>
     <string name="fragment_job_address">Sơn Trà - Đà Nẵng</string>
     <string name="fragment_job_employee">AnhNT, NgocTV</string>
-
+    <string name="activity_update_job">Cập nhật công việc</string>
+    <string name="activity_update_job_detail">Chi tiết tham gia</string>
+    <string name="activity_update_job_add">Thêm</string>
+    <string name="activity_update_job_save">LƯU</string>
+    <string name="activity_update_job_note">Ghi chú</string>
 </resources>
