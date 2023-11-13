@@ -13,4 +13,14 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- TODO: job -->
+    <string name="fragment_job">Công việc</string>
+    <string name="fragment_job_id">HD0001</string>
+    <string name="fragment_job_date">16/11/2023</string>
+    <string name="fragment_job_status">Đang thực hiện</string>
+    <string name="fragment_job_name">Chụp hình cưới</string>
+    <string name="fragment_job_address">Sơn Trà - Đà Nẵng</string>
+    <string name="fragment_job_employee">AnhNT, NgocTV</string>
+
 </resources>

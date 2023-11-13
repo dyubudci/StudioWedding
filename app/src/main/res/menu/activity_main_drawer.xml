@@ -12,5 +12,10 @@
             android:id="@+id/nav_notication"
             android:icon="@drawable/ic_menu_gallery"
             android:title="@string/menu_gallery" />
+
+        <item
+            android:id="@+id/nav_job"
+            android:icon="@drawable/drawer_task"
+            android:title="@string/fragment_job" />
     </group>
 </menu>
