@@ -25,9 +25,10 @@
             android:exported="false" />
         <activity
             android:name=".view.activity.MainActivity"
+
             android:exported="true"
-            android:label="@string/title_activity_main"
-            android:theme="@style/Theme.StudioWedding.NoActionBar">
+            android:theme="@style/Theme.StudioWedding"
+            android:label="@string/title_activity_main">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
