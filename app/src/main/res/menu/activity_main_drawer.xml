@@ -1,16 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:showIn="navigation_view">
-
-    <group android:checkableBehavior="single">
-        <item
-            android:id="@+id/nav_home"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="@string/menu_home" />
-        <item
-            android:id="@+id/nav_notication"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="@string/menu_gallery" />
-    </group>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:title="@string/home" android:id="@+id/navHome" android:icon="@drawable/drawer_home" app:showAsAction="ifRoom"/>
+    <item android:title="@string/notification" android:id="@+id/navNotification" android:icon="@drawable/drawer_alert" app:showAsAction="ifRoom"/>
+    <item android:title="@string/employee" android:icon="@drawable/drawer_emp" android:id="@+id/navEmployee" app:showAsAction="ifRoom"/>
+    <item android:title="@string/client" android:id="@+id/navClient" android:icon="@drawable/drawer_clients" app:showAsAction="ifRoom"/>
+    <item android:title="@string/services" android:icon="@drawable/drawer_product_services" android:id="@+id/navServices" app:showAsAction="ifRoom"/>
+    <item android:title="@string/invoice" android:icon="@drawable/task_status" android:id="@+id/navInvoice" app:showAsAction="ifRoom"/>
+    <item android:title="@string/task" android:icon="@drawable/drawer_task" android:id="@+id/navTask" app:showAsAction="ifRoom"/>
+    <item android:title="@string/statistic" android:icon="@drawable/drawer_revenue" android:id="@+id/navStatistic" app:showAsAction="ifRoom"/>
+    <item android:title="@string/setiing" android:icon="@drawable/drawer_setting" android:id="@+id/navSettings" app:showAsAction="ifRoom"/>
+    <item android:title="@string/logout" android:icon="@drawable/drawer_logout" android:id="@+id/navLogout" app:showAsAction="ifRoom"/>
 </menu>

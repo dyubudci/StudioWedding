@@ -13,4 +13,16 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="home">Trang Chủ</string>
+    <string name="services">Sản phẩm - Dịch vụ</string>
+    <string name="mywork">Công Việc</string>
+    <string name="employee">Nhân Viên</string>
+    <string name="invoice">Hợp Đồng</string>
+    <string name="client">Khách Hàng</string>
+    <string name="setiing">Cài Đặt</string>
+    <string name="statistic">Thống kê</string>
+    <string name="notification">Thông báo</string>
+    <string name="logout">Đăng Xuất</string>
+    <string name="task">Công việc</string>
 </resources>
