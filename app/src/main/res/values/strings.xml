@@ -29,4 +29,6 @@
     <string name="activity_update_job_note">Ghi chú</string>
     <string name="activity_search_job">Nhập tên công việc</string>
     <string name="fragment_job_list">Danh sách công việc</string>
+    <string name="fragment_job_see_all">Xem tất cả</string>
+    <string name="fragment_job_list_today">Công việc hôm nay</string>
 </resources>
