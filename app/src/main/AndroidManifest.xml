@@ -17,7 +17,7 @@
           />
         <activity
             android:name=".view.activity.MainActivity"
-            android:theme="@style/Theme.StudioWedding.NoActionBar"
+            android:theme="@style/Theme.StudioWedding"
             android:label="@string/title_activity_main"
             android:exported="true" >
             <intent-filter>
