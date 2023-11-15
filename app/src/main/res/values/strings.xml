@@ -25,4 +25,15 @@
     <string name="notification">Thông báo</string>
     <string name="logout">Đăng Xuất</string>
     <string name="task">Công việc</string>
+    <string name="title_add_contract">Thêm hợp đồng</string>
+    <string name="paid">Đã thanh toán</string>
+    <string name="unpaid">Chưa thanh toán</string>
+    <string name="title_update_contract">Cập nhật hợp đồng</string>
+    <string name="aciton_update">Cập nhật</string>
+    <string name="action_del">Xoá</string>
+    <string name="title_pick_client">Chọn khách hàng</string>
+    <string name="incurrent">Có phát sinh</string>
+    <string name="is_incurrent">Không có phát sinh</string>
+    <string name="damage">Làm hỏng đồ</string>
+    <string name="is_late">Trả đồ muộn</string>
 </resources>
