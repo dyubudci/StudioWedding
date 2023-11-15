@@ -1,27 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".view.fragment.InvoiceFragment">
 
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="11dp"
+        android:orientation="horizontal"
+        android:padding="5dp">
+
+        <SearchView
+            android:layout_width="281dp"
+            android:layout_height="52dp"
+            android:layout_weight="1"
+            android:background="@drawable/edittext_bgr_white" />
+
+        <ImageView
+            android:id="@+id/imgFilterContract"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:src="@drawable/filter_icon" />
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="14dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:text="Danh sách hợp đồng"
+        android:textSize="15dp"
+        android:textColor="@color/black"
+        android:textStyle="bold"/>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rcvContract"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:paddingLeft="16dp" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fabContract"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="69dp"
             android:clickable="true"
-            android:src="@drawable/floating_button_icon" />
+            app:layout_anchor="@id/rcvContract"
+            app:layout_anchorGravity="bottom|end"
+            app:srcCompat="@drawable/floating_button_icon" />
+
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
-</FrameLayout>
+</LinearLayout>
