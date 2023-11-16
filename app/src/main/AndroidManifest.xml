@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" >
+    xmlns:tools="http://schemas.android.com/tools">
 
     <application
         android:allowBackup="true"
@@ -10,24 +10,24 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.StudioWedding"
-        tools:targetApi="31" >
+        tools:targetApi="31">
+        <activity
+            android:name=".view.activity.EditInformation"
+            android:exported="false" />
         <activity
             android:name=".view.activity.MainActivity"
-            android:exported="false"
-          />
+            android:exported="false" />
         <activity
             android:name=".view.activity.Login"
-            android:exported="false"
-            />
+            android:exported="false" />
         <activity
             android:name=".view.activity.ChangePassword"
-            android:exported="false"
-            />
+            android:exported="false" />
         <activity
             android:name=".SplashActivity"
-            android:theme="@style/Theme.StudioWedding"
+            android:exported="true"
             android:label="@string/title_activity_main"
-            android:exported="true" >
+            android:theme="@style/Theme.StudioWedding">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

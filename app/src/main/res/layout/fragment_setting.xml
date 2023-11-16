@@ -9,6 +9,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/line"
         android:orientation="vertical">
 
         <androidx.cardview.widget.CardView
@@ -28,8 +29,8 @@
                 android:layout_width="136dp"
                 android:layout_height="136dp"
                 android:adjustViewBounds="true"
-                android:src="@drawable/login_username"
                 android:scaleType="centerCrop"
+                android:src="@drawable/login_username"
                 tools:ignore="UseAppTint" />
 
 
@@ -40,6 +41,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:fontFamily="@font/inter_medium"
             android:text="Admin"
             android:textColor="@color/black"
             android:textSize="16sp"
@@ -50,6 +52,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:fontFamily="@font/inter_medium"
             android:text="Phạm Đình Thông"
             android:textColor="@color/black" />
     </LinearLayout>

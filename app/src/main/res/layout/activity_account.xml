@@ -19,7 +19,7 @@
             android:id="@+id/imgBack"
             android:layout_width="25dp"
             android:layout_height="25dp"
-            android:layout_marginStart="30dp"
+            android:layout_marginStart="15dp"
             android:src="@drawable/arrow_back"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -44,7 +44,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="56dp"
-        android:background="#D8D4D4"
+        android:background="@color/line"
         android:orientation="vertical"
         android:padding="5dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -55,29 +55,24 @@
             android:layout_width="match_parent"
             android:layout_height="55dp"
             android:layout_margin="16dp"
-            android:background="@drawable/edittext_bgr_white"
+            android:background="@drawable/edittext_bgr"
             android:padding="5dp">
-
-            <ImageView
-                android:id="@+id/imageView3"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:src="@drawable/login_password"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
 
             <EditText
                 android:id="@+id/editTextText1"
                 android:layout_width="300dp"
                 android:layout_height="40dp"
-                android:background="@color/white"
+                android:layout_marginStart="5dp"
+                android:background="@color/line"
+                android:drawableStart="@drawable/changepass_comfirm"
+                android:drawablePadding="10dp"
                 android:ems="10"
+                android:fontFamily="@font/inter_medium"
                 android:hint="Mật khẩu cũ"
                 android:inputType="text"
                 android:paddingStart="10dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/imageView3"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -87,29 +82,24 @@
             android:layout_height="55dp"
             android:layout_margin="16dp"
 
-            android:background="@drawable/edittext_bgr_white"
+            android:background="@drawable/edittext_bgr"
             android:padding="5dp">
-
-            <ImageView
-                android:id="@+id/imageView1"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:src="@drawable/changepass_new"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
 
             <EditText
                 android:id="@+id/editTextText2"
                 android:layout_width="300dp"
                 android:layout_height="40dp"
-                android:background="@color/white"
+                android:layout_marginStart="5dp"
+                android:background="@color/line"
+                android:drawableStart="@drawable/changepass_new"
                 android:ems="10"
                 android:hint="Mật khẩu mới"
                 android:inputType="text"
+                android:fontFamily="@font/inter_medium"
                 android:paddingStart="10dp"
+                android:drawablePadding="10dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/imageView1"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -119,29 +109,24 @@
             android:layout_width="match_parent"
             android:layout_height="55dp"
             android:layout_margin="16dp"
-            android:background="@drawable/edittext_bgr_white"
+            android:background="@drawable/edittext_bgr"
             android:padding="5dp">
-
-            <ImageView
-                android:id="@+id/imageView0"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:src="@drawable/changepass_comfirm"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
 
             <EditText
                 android:id="@+id/editTextText0"
                 android:layout_width="300dp"
                 android:layout_height="40dp"
-                android:background="@color/white"
+                android:layout_marginStart="5dp"
+                android:background="@color/line"
+                android:drawablePadding="10dp"
+                android:drawableStart="@drawable/changepass_old"
                 android:ems="10"
                 android:hint="Nhập lại mật khẩu mới"
                 android:inputType="text"
                 android:paddingStart="10dp"
+                android:fontFamily="@font/inter_medium"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/imageView0"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

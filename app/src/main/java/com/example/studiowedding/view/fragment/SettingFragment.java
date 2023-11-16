@@ -13,6 +13,7 @@ import android.widget.Button;
 
 import com.example.studiowedding.R;
 import com.example.studiowedding.view.activity.ChangePassword;
+import com.example.studiowedding.view.activity.EditInformation;
 
 
 public class SettingFragment extends Fragment {
@@ -28,6 +29,15 @@ public class SettingFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(view.getContext(), ChangePassword.class);
+                startActivity(intent);
+            }
+        });
+
+        btntaikhoan = view.findViewById(R.id.btnTaikhoan);
+        btntaikhoan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(view.getContext(), EditInformation.class);
                 startActivity(intent);
             }
         });
