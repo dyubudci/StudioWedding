@@ -5,32 +5,28 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.os.Bundle;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.example.studiowedding.R;
 
 public class ProductSelectActivity extends AppCompatActivity {
-    private Toolbar toolbar;
+    private ImageView backImageView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_select);
 
         initView();
-        initToolbar();
         setListeners();
     }
 
     private void initView() {
-
-    }
-
-    private void initToolbar() {
-        toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        backImageView = findViewById(R.id.backImageView);
     }
 
     private void setListeners() {
-        toolbar.setNavigationOnClickListener(view -> getOnBackPressedDispatcher().onBackPressed());
+        backImageView.setOnClickListener(view -> getOnBackPressedDispatcher().onBackPressed());
     }
 }
