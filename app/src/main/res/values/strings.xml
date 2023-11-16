@@ -44,33 +44,6 @@
     <string name="notification">Thông báo</string>
     <string name="logout">Đăng Xuất</string>
     <string name="task">Công việc</string>
-
-
-    <!-- Staff -->
-    <string name="content_staff">Danh sách nhân viên</string>
-    <string name="name_staff">Floyd Miles</string>
-    <string name="role_staff">Thợ ảnh</string>
-    <string name="content_add_staff">Thêm nhân viên</string>
-    <string name="hint_email_staff">Email</string>
-    <string name="edt_pass_staff">abc</string>
-    <string name="hint_name_staff">Họ tên</string>
-    <string name="hint_dateofbirth_staff">Ngày sinh</string>
-    <string name="hint_phone_staff">Điện thoại</string>
-    <string name="hint_adress_staff">Địa chỉ</string>
-    <string name="hint_role_staff">Chọn vai trò</string>
-    <string name="text_gender_staff">Giới tính</string>
-    <string name="text_gender_staff_male">Nam</string>
-    <string name="text_gender_staff_female">Nữ</string>
-    <string name="text_btn_add">THÊM MỚI</string>
-    <string name="content_update_staff">Thông tin nhân viên</string>
-
-    <string name="text_email_update_staff">nv1@gmail.com</string>
-    <string name="text_dob_update_staff">12/21/2001</string>
-    <string name="text_phone_update_staff">0905456123</string>
-    <string name="text_location_update_staff">Đà Nẵng</string>
-    <string name="text_role_update_staff">Thợ ảnh</string>
-    <string name="text_btn_update_staff">CẬP NHẬT</string>
-
     <string name="title_add_contract">Thêm hợp đồng</string>
     <string name="paid">Đã thanh toán</string>
     <string name="unpaid">Chưa thanh toán</string>
@@ -82,5 +55,4 @@
     <string name="is_incurrent">Không có phát sinh</string>
     <string name="damage">Làm hỏng đồ</string>
     <string name="is_late">Trả đồ muộn</string>
-
 </resources>
