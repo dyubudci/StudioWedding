@@ -3,12 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".view.fragment.EmployeeFragment">
 
-<<<<<<< HEAD
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-=======
     <LinearLayout
         android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
@@ -52,14 +49,11 @@
     <androidx.recyclerview.widget.RecyclerView
         tools:listitem="@layout/item_employee"
         tools:itemCount="4"
->>>>>>> staff_tu
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:text="@string/hello_blank_fragment" />
 
-<<<<<<< HEAD
-</FrameLayout>
-=======
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabContract"
         android:layout_width="wrap_content"
@@ -72,5 +66,4 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
->>>>>>> staff_tu
+</FrameLayout>
