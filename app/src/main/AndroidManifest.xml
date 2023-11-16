@@ -11,6 +11,22 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.StudioWedding"
         tools:targetApi="31">
+        <activity
+            android:name=".view.activity.detail_contract.UpdateContractServiceActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.activity.detail_contract.UpdateContractProductActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.activity.detail_contract.ServiceSelectActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.activity.detail_contract.ProductSelectActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.activity.detail_contract.AddContractDetailActivity"
+            android:exported="false" />
+
 
         <activity
             android:name=".view.activity.contract.FilterContractActivity"
@@ -44,7 +60,7 @@
             android:name=".view.activity.MainActivity"
             android:exported="true"
             android:label="@string/title_activity_main"
-            android:theme="@style/Theme.StudioWedding">>
+            android:theme="@style/Theme.StudioWedding">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

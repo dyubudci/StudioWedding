@@ -34,7 +34,7 @@
     <string name="fragment_job_list_today">Công việc hôm nay</string>
 
     <string name="home">Trang Chủ</string>
-    <string name="services">Sản phẩm - Dịch vụ</string>
+    <string name="services">Sản phẩm &amp; Dịch vụ</string>
     <string name="mywork">Công Việc</string>
     <string name="employee">Nhân Viên</string>
     <string name="invoice">Hợp Đồng</string>
