@@ -14,6 +14,25 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
+
+    <!-- TODO: job -->
+    <string name="fragment_job">Công việc</string>
+    <string name="fragment_job_id">HD0001</string>
+    <string name="fragment_job_date">16/11/2023</string>
+    <string name="fragment_job_status">Đang thực hiện</string>
+    <string name="fragment_job_name">Chụp hình cưới</string>
+    <string name="fragment_job_address">Sơn Trà - Đà Nẵng</string>
+    <string name="fragment_job_employee">AnhNT, NgocTV</string>
+    <string name="activity_update_job">Cập nhật công việc</string>
+    <string name="activity_update_job_detail">Chi tiết tham gia</string>
+    <string name="activity_update_job_add">Thêm</string>
+    <string name="activity_update_job_save">LƯU</string>
+    <string name="activity_update_job_note">Ghi chú</string>
+    <string name="activity_search_job">Nhập tên công việc</string>
+    <string name="fragment_job_list">Danh sách công việc</string>
+    <string name="fragment_job_see_all">Xem tất cả</string>
+    <string name="fragment_job_list_today">Công việc hôm nay</string>
+
     <string name="home">Trang Chủ</string>
     <string name="services">Sản phẩm &amp; Dịch vụ</string>
     <string name="mywork">Công Việc</string>
@@ -25,4 +44,15 @@
     <string name="notification">Thông báo</string>
     <string name="logout">Đăng Xuất</string>
     <string name="task">Công việc</string>
+    <string name="title_add_contract">Thêm hợp đồng</string>
+    <string name="paid">Đã thanh toán</string>
+    <string name="unpaid">Chưa thanh toán</string>
+    <string name="title_update_contract">Cập nhật hợp đồng</string>
+    <string name="aciton_update">Cập nhật</string>
+    <string name="action_del">Xoá</string>
+    <string name="title_pick_client">Chọn khách hàng</string>
+    <string name="incurrent">Có phát sinh</string>
+    <string name="is_incurrent">Không có phát sinh</string>
+    <string name="damage">Làm hỏng đồ</string>
+    <string name="is_late">Trả đồ muộn</string>
 </resources>
