@@ -24,13 +24,14 @@
             android:name=".view.activity.detail_contract.ProductSelectActivity"
             android:exported="false" />
         <activity
-            android:name=".view.activity.detail_contract.AddContractDetailActivity"
+            android:name=".view.activity.MainActivity"
             android:exported="false" />
         <activity
             android:name=".SplashActivity"
             android:exported="false" />
         <activity
-            android:name=".view.activity.MainActivity"
+            android:name=".view.activity.detail_contract.AddContractDetailActivity"
+
             android:exported="true"
             android:label="@string/title_activity_main"
             android:theme="@style/Theme.StudioWedding">

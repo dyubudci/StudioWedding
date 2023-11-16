@@ -5,11 +5,8 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 
@@ -133,7 +130,7 @@ public class AddContractDetailActivity extends AppCompatActivity {
                     calendar.set(Calendar.MONTH, monthOfYear);
                     calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 
-                    String selectedDate = FormatUtils.dateToString(calendar.getTime());
+                    String selectedDate = FormatUtils.formatDateToString(calendar.getTime());
                     editText.setText(selectedDate);
                 },
                 calendar.get(Calendar.YEAR),
