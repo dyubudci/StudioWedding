@@ -8,11 +8,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.example.studiowedding.R;
 import com.example.studiowedding.utils.FormatUtils;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -30,22 +32,18 @@ public class AddContractDetailActivity extends AppCompatActivity {
             locationEditText,
             dateOfPerformEditText;
     private RelativeLayout productButton, serviceButton, addButton;
+    private ImageView backImageView;
+    Calendar calendar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_contract_detail);
 
-        initToolbar();
         initView();
         setListeners();
         displayProductUI();
         generateContractDetailCode();
-    }
-
-    private void initToolbar() {
-        toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
     }
 
     private void initView() {
@@ -60,10 +58,11 @@ public class AddContractDetailActivity extends AppCompatActivity {
         productButton = findViewById(R.id.productButton);
         serviceButton = findViewById(R.id.serviceButton);
         addButton = findViewById(R.id.addButton);
+        backImageView = findViewById(R.id.backImageView);
     }
 
     private void setListeners() {
-        toolbar.setNavigationOnClickListener(view -> getOnBackPressedDispatcher().onBackPressed());
+        backImageView.setOnClickListener(view -> getOnBackPressedDispatcher().onBackPressed());
         productButton.setOnClickListener(view -> displayProductUI());
         serviceButton.setOnClickListener(view -> displayServiceUI());
         productSelectEditText.setOnClickListener(view -> launcherProductSelectActivity());
@@ -118,26 +117,35 @@ public class AddContractDetailActivity extends AppCompatActivity {
 
     /**
      * Hiển thị hộp thoại chọn ngày
+     *
      * @param editText input khi nhấn
      */
     private void showDatePicker(EditText editText) {
-        Calendar calendar = Calendar.getInstance();
+        try {
+            if (editText.getText().toString().isEmpty()) {
+                calendar = Calendar.getInstance();
+            } else {
+                Date date = FormatUtils.parserStringToDate(editText.getText().toString());
+                calendar.setTime(date);
+            }
+            DatePickerDialog datePickerDialog = new DatePickerDialog(
+                    this,
+                    (view, year, monthOfYear, dayOfMonth) -> {
+                        calendar.set(Calendar.YEAR, year);
+                        calendar.set(Calendar.MONTH, monthOfYear);
+                        calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 
-        DatePickerDialog datePickerDialog = new DatePickerDialog(
-                this,
-                (view, year, monthOfYear, dayOfMonth) -> {
-                    calendar.set(Calendar.YEAR, year);
-                    calendar.set(Calendar.MONTH, monthOfYear);
-                    calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-
-                    String selectedDate = FormatUtils.formatDateToString(calendar.getTime());
-                    editText.setText(selectedDate);
-                },
-                calendar.get(Calendar.YEAR),
-                calendar.get(Calendar.MONTH),
-                calendar.get(Calendar.DAY_OF_MONTH)
-        );
-        datePickerDialog.show();
+                        String selectedDate = FormatUtils.formatDateToString(calendar.getTime());
+                        editText.setText(selectedDate);
+                    },
+                    calendar.get(Calendar.YEAR),
+                    calendar.get(Calendar.MONTH),
+                    calendar.get(Calendar.DAY_OF_MONTH)
+            );
+            datePickerDialog.show();
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     // Tạo mã hợp đồng chi tiết: HDCT + ngày tháng năm giờ hiện tại
