@@ -15,7 +15,8 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white">
+            android:background="@color/white"
+            tools:ignore="MissingConstraints">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -38,43 +39,23 @@
                     android:layout_marginStart="16dp"
                     android:fontFamily="@font/inter_bold"
                     android:gravity="center"
-                    android:text="Khách hàng"
+                    android:text="Chọn khách hàng"
                     android:textColor="@color/black"
                     android:textSize="16sp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="@+id/backImageView"
-                    app:layout_constraintEnd_toStartOf="@+id/linearLayout"
-                    app:layout_constraintHorizontal_bias="0.126"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.452"
                     app:layout_constraintStart_toEndOf="@+id/backImageView"
                     app:layout_constraintTop_toTopOf="@+id/backImageView"
-                    app:layout_constraintVertical_bias="1.0" />
+                    app:layout_constraintVertical_bias="1.0"
+                    tools:ignore="HardcodedText" />
 
-                <LinearLayout
-                    android:id="@+id/linearLayout"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="16dp"
-                    android:orientation="horizontal"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    tools:ignore="MissingConstraints">
-
-                    <ImageView
-                        android:id="@+id/search_kh"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/search_bar_icon" />
-
-                    <ImageView
-                        android:id="@+id/filter_kh"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
-                        android:src="@drawable/filter_icon" />
-                </LinearLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.appcompat.widget.Toolbar>
+
 
         <LinearLayout
             android:layout_width="0dp"
@@ -86,14 +67,40 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
-            <TextView
-                android:layout_marginTop="16dp"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textStyle="bold"
-                android:textSize="16sp"
-                android:text="Danh sách khách hàng"
-                android:textColor="@color/black" />
+                android:orientation="horizontal">
+                <EditText
+                    android:layout_weight="2"
+                    android:id="@+id/edtName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="16dp"
+                    android:background="@drawable/edittext_bgr_white"
+                    android:drawableStart="@drawable/search_bar_icon"
+                    android:drawablePadding="16dp"
+                    android:hint="Tìm khách hàng"
+                    android:minHeight="52dp"
+                    tools:ignore="HardcodedText,InefficientWeight,ObsoleteLayoutParam" />
+
+                <TextView
+                    android:id="@+id/tvAddCustomer"
+                    android:layout_marginTop="8dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Tạo mới"
+                    android:layout_marginEnd="8dp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    tools:ignore="HardcodedText" />
+
+            </LinearLayout>
+
+
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerKH"
