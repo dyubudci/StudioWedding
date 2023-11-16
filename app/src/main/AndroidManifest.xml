@@ -45,9 +45,6 @@
             android:exported="false" />
 
         <activity
-            android:name=".view.activity.task.SearchTaskActivity"
-            android:exported="false" />
-        <activity
             android:name=".view.activity.task.UpdateTaskActivity"
             android:exported="false" />
         <activity

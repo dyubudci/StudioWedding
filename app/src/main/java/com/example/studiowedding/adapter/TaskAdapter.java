@@ -10,6 +10,7 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.studiowedding.R;
@@ -18,11 +19,11 @@ import com.example.studiowedding.model.Task;
 
 import java.util.List;
 
-public class AdapterTask extends RecyclerView.Adapter<AdapterTask.ViewHolder> {
+public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
 
     private final List<Task> mList;
     private OnItemClickListner.TaskI mOnClickItem;
-    public AdapterTask(List<Task> mList) {
+    public TaskAdapter(List<Task> mList) {
         this.mList = mList;
     }
 
@@ -89,7 +90,16 @@ public class AdapterTask extends RecyclerView.Adapter<AdapterTask.ViewHolder> {
         public void bind(Task task){
             tvId.setText(task.getId());
             tvDate.setText(task.getDate());
-            tvStatus.setText(task.getStatusTask());
+            switch (task.getStatusTask()){
+                case "Đang thực hiện" :
+                    tvStatus.setTextColor(ContextCompat.getColor(itemView.getContext(), R.color.yellow));
+                    tvStatus.setText(task.getStatusTask());
+                    break;
+                case "Đã xong" :
+                    tvStatus.setTextColor(ContextCompat.getColor(itemView.getContext(), R.color.dark_green));
+                    tvStatus.setText(task.getStatusTask());
+                    break;
+            }
             tvName.setText(task.getName());
             tvAddress.setText(task.getAddress());
             if (task.getEmployee() != null && !task.getEmployee().isEmpty()) {
