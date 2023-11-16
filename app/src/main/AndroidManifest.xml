@@ -15,15 +15,6 @@
             android:name=".view.activity.employee.SearchEmployeeActivity"
             android:exported="false" />
         <activity
-            android:name=".view.activity.staff.DeleteActivity"
-            android:exported="false" />
-        <activity
-            android:name=".view.activity.staff.FilterActivity"
-            android:exported="false" />
-        <activity
-            android:name=".view.activity.staff.SearchStaffActivity"
-            android:exported="false" />
-        <activity
             android:name=".SplashActivity"
             android:exported="false" />
         <activity
