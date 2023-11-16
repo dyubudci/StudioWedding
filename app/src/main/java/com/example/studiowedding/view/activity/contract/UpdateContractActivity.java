@@ -2,7 +2,9 @@ package com.example.studiowedding.view.activity.contract;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.DatePickerDialog;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,10 +14,15 @@ import android.widget.PopupMenu;
 
 import com.example.studiowedding.R;
 import com.example.studiowedding.interfaces.OnItemClickListner;
+import com.example.studiowedding.utils.FormatUtils;
+
+import java.text.ParseException;
+import java.util.Calendar;
+import java.util.Date;
 
 public class UpdateContractActivity extends AppCompatActivity implements View.OnClickListener {
     private ImageView imgBack;
-    private EditText edPaymentStatus,edIncurrentStatus,edIncurrentNote,edFine,edDor;
+    private EditText edPaymentStatus,edIncurrentStatus,edIncurrentNote,edFine,edDor,edDop;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,11 +34,13 @@ public class UpdateContractActivity extends AppCompatActivity implements View.On
         edIncurrentNote=findViewById(R.id.edUpdateIncurrentNoteContract);
         edFine=findViewById(R.id.edUpdateIncurrentFineContract);
         edDor=findViewById(R.id.edUpdateIncurrentDorContract);
+        edDop=findViewById(R.id.edUpdateDOPContract);
 
         imgBack.setOnClickListener(this);
         edPaymentStatus.setOnClickListener(this);
         edIncurrentStatus.setOnClickListener(this);
         edIncurrentNote.setOnClickListener(this);
+        edDop.setOnClickListener(this);
     }
 
 
@@ -40,6 +49,13 @@ public class UpdateContractActivity extends AppCompatActivity implements View.On
         switch (view.getId()){
             case R.id.imgBackFromUpdateContract:
                 finish();
+                break;
+            case R.id.edUpdateDOPContract:
+                try {
+                    showDatePicker(edDop);
+                } catch (ParseException e) {
+                    throw new RuntimeException(e);
+                }
                 break;
             case R.id.edUpdatePaymentStatusContract:
                 showPopupMenuPayment(view);
@@ -53,6 +69,35 @@ public class UpdateContractActivity extends AppCompatActivity implements View.On
         }
     }
 
+//    Dialog date picker
+    private void showDatePicker(EditText editText) throws ParseException {
+        Calendar calendar = Calendar.getInstance();
+
+        if (editText != null && !TextUtils.isEmpty(editText.getText())) {
+            Date currentDate = FormatUtils.parserStringToDate(editText.getText().toString());
+            if (currentDate != null) {
+                calendar.setTime(currentDate);
+            }
+        }
+
+        DatePickerDialog datePickerDialog = new DatePickerDialog(
+                this,
+                (view, year, monthOfYear, dayOfMonth) -> {
+                    calendar.set(Calendar.YEAR, year);
+                    calendar.set(Calendar.MONTH, monthOfYear);
+                    calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+
+                    String selectedDate = FormatUtils.formatDateToString(calendar.getTime());
+                    editText.setText(selectedDate);
+                },
+                calendar.get(Calendar.YEAR),
+                calendar.get(Calendar.MONTH),
+                calendar.get(Calendar.DAY_OF_MONTH)
+        );
+        datePickerDialog.show();
+    }
+
+//    Popup menu trạng thái thanh toán
     private void showPopupMenuPayment(View v) {
         PopupMenu popupMenu = new PopupMenu(this, v);
         MenuInflater inflater = popupMenu.getMenuInflater();
@@ -76,6 +121,7 @@ public class UpdateContractActivity extends AppCompatActivity implements View.On
 
         popupMenu.show();
     }
+//    Popup menu phát sinh
     private void showPopupMenuIncurrent(View v) {
         PopupMenu popupMenu = new PopupMenu(this, v);
         MenuInflater inflater = popupMenu.getMenuInflater();
@@ -105,6 +151,7 @@ public class UpdateContractActivity extends AppCompatActivity implements View.On
 
         popupMenu.show();
     }
+//    Popup menu nội dung phát sinh
     private void showPopupMenuIncurrentNote(View v) {
         PopupMenu popupMenu = new PopupMenu(this, v);
         MenuInflater inflater = popupMenu.getMenuInflater();
