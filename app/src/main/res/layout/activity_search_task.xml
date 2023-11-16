@@ -79,5 +79,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout3"
-        tools:listitem="@layout/item_job" />
+        tools:listitem="@layout/item_task" />
 </androidx.constraintlayout.widget.ConstraintLayout>
