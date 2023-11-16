@@ -11,6 +11,23 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.StudioWedding"
         tools:targetApi="31">
+
+        <activity
+            android:name=".view.activity.contract.FilterContractActivity"
+            android:exported="false"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+        <activity
+            android:name=".view.activity.contract.PickClientActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.activity.contract.UpdateContractActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.activity.contract.AddContractActivity"
+            android:exported="false" />
+
         <activity
             android:name=".view.activity.job.seeJob.SeeJobActivity"
             android:exported="false" />
@@ -25,10 +42,9 @@
             android:exported="false" />
         <activity
             android:name=".view.activity.MainActivity"
-
             android:exported="true"
-            android:theme="@style/Theme.StudioWedding"
-            android:label="@string/title_activity_main">
+            android:label="@string/title_activity_main"
+            android:theme="@style/Theme.StudioWedding">>
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
