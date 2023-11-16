@@ -11,11 +11,55 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.StudioWedding"
         tools:targetApi="31">
+
         <activity
             android:name=".UpdateEmployeeActivity"
             android:exported="false" />
         <activity
             android:name=".AddEmployeeActivity"
+            android:exported="false" />
+        <activity
+
+        <activity
+            android:name=".view.activity.detail_contract.UpdateContractServiceActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.activity.detail_contract.UpdateContractProductActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.activity.detail_contract.ServiceSelectActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.activity.detail_contract.ProductSelectActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.activity.detail_contract.AddContractDetailActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".view.activity.contract.FilterContractActivity"
+            android:exported="false"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+        <activity
+            android:name=".view.activity.contract.PickClientActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.activity.contract.UpdateContractActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.activity.contract.AddContractActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".view.activity.task.SearchTaskActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.activity.task.UpdateTaskActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.activity.task.SeeTaskActivity"
             android:exported="false" />
         <activity
             android:name=".SplashActivity"
