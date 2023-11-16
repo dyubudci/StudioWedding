@@ -18,7 +18,6 @@
         <activity
             android:name=".view.activity.employee.AddEmployeeActivity"
             android:exported="false" />
-        <activity
 
         <activity
             android:name=".view.activity.detail_contract.UpdateContractServiceActivity"
