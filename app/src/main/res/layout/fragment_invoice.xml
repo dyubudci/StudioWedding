@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/line"
     android:orientation="vertical"
     tools:context=".view.fragment.InvoiceFragment">
 
@@ -23,14 +22,13 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="11dp"
                 android:orientation="horizontal"
-                android:padding="16dp">
+                android:padding="5dp">
 
                 <SearchView
                     android:layout_width="281dp"
                     android:layout_height="52dp"
                     android:layout_weight="1"
-                    android:background="@drawable/edittext_bgr_white"
-                    android:queryHint="Nhập mã hợp đồng" />
+                    android:background="@drawable/edittext_bgr_white" />
 
                 <ImageView
                     android:id="@+id/imgFilterContract"
@@ -49,7 +47,7 @@
                 android:layout_marginBottom="16dp"
                 android:text="Danh sách hợp đồng"
                 android:textColor="@color/black"
-                android:textSize="15sp"
+                android:textSize="15dp"
                 android:textStyle="bold" />
 
             <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -76,6 +74,6 @@
         android:layout_gravity="bottom|end"
         android:layout_marginRight="20dp"
         android:layout_marginBottom="69dp"
-        android:clickable="true"
-        android:src="@drawable/floating_button_icon" />
+        android:src="@drawable/floating_button_icon"
+        android:clickable="true" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
