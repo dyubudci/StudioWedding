@@ -11,7 +11,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical">
 
         <LinearLayout
@@ -48,7 +48,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:gravity="center"
             android:orientation="vertical"
             android:padding="10dp">
@@ -56,27 +56,28 @@
 
             <EditText
                 android:id="@+id/edAddIdContract"
-                android:layout_width="343dp"
+                android:layout_width="match_parent"
                 android:layout_height="52dp"
-                android:layout_marginBottom="7dp"
+                android:layout_marginTop="8dp"
                 android:background="@drawable/edittext_bgr_white"
                 android:drawableLeft="@drawable/detail_contract_id"
-                android:drawablePadding="8dp"
+                android:drawablePadding="14dp"
                 android:ems="10"
                 android:hint="Mã HD"
                 android:inputType="text"
+                android:enabled="false"
                 android:padding="13dp"
                 android:textSize="14sp" />
 
             <EditText
                 android:id="@+id/edAddClientContract"
-                android:layout_width="343dp"
+                android:layout_width="match_parent"
                 android:layout_height="52dp"
-                android:layout_marginBottom="7dp"
+                android:layout_marginTop="8dp"
                 android:background="@drawable/edittext_bgr_white"
                 android:clickable="true"
                 android:drawableLeft="@drawable/contract_pick_client"
-                android:drawablePadding="8dp"
+                android:drawablePadding="14dp"
                 android:ems="10"
                 android:focusable="false"
                 android:inputType="text"
@@ -86,12 +87,13 @@
 
             <EditText
                 android:id="@+id/edAddDateCreateContract"
-                android:layout_width="343dp"
+                android:layout_width="match_parent"
                 android:layout_height="52dp"
-                android:layout_marginBottom="7dp"
+                android:layout_marginTop="8dp"
                 android:background="@drawable/edittext_bgr_white"
                 android:drawableLeft="@drawable/contract_date_created"
-                android:drawablePadding="8dp"
+                android:drawablePadding="14dp"
+                android:enabled="false"
                 android:ems="10"
                 android:hint="Ngày tạo HD"
                 android:inputType="text"
@@ -104,7 +106,7 @@
                 android:orientation="vertical">
 
                 <LinearLayout
-                    android:layout_width="343dp"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:orientation="horizontal"
@@ -130,18 +132,22 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rcvDetailContractInAddContract"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:layout_height="match_parent"
+                    tools:listitem="@layout/layout_item_detail_contract"
+                    tools:itemCount="3" />
 
             </LinearLayout>
 
             <EditText
                 android:id="@+id/edAddDOPContract"
-                android:layout_width="343dp"
+                android:layout_width="match_parent"
                 android:layout_height="52dp"
-                android:layout_marginBottom="7dp"
+                android:layout_marginTop="8dp"
                 android:background="@drawable/edittext_bgr_white"
                 android:drawableLeft="@drawable/contract_dop"
-                android:drawablePadding="8dp"
+                android:drawablePadding="14dp"
+                android:focusable="false"
+                android:clickable="true"
                 android:ems="10"
                 android:hint="Ngày thanh toán"
                 android:inputType="text"
@@ -150,40 +156,41 @@
 
             <EditText
                 android:id="@+id/edAddDepositContract"
-                android:layout_width="343dp"
+                android:layout_width="match_parent"
                 android:layout_height="52dp"
-                android:layout_marginBottom="7dp"
+                android:layout_marginTop="8dp"
                 android:background="@drawable/edittext_bgr_white"
                 android:drawableLeft="@drawable/contract_deposit"
-                android:drawablePadding="8dp"
+                android:drawablePadding="14dp"
                 android:ems="10"
                 android:hint="Tiền cọc"
-                android:inputType="text"
+                android:inputType="number"
                 android:padding="13dp"
                 android:textSize="14sp" />
 
             <EditText
                 android:id="@+id/edAddDiscountContract"
-                android:layout_width="343dp"
+                android:layout_width="match_parent"
                 android:layout_height="52dp"
-                android:layout_marginBottom="7dp"
+                android:layout_marginTop="8dp"
                 android:background="@drawable/edittext_bgr_white"
                 android:drawableLeft="@drawable/contract_incurred_fine"
-                android:drawablePadding="8dp"
+                android:drawablePadding="14dp"
                 android:ems="10"
                 android:hint="Giảm giá"
-                android:inputType="text"
+                android:inputType="number"
                 android:padding="13dp"
                 android:textSize="14sp" />
 
             <EditText
                 android:id="@+id/edAddTotalAmmountContract"
-                android:layout_width="343dp"
+                android:layout_width="match_parent"
                 android:layout_height="52dp"
-                android:layout_marginBottom="7dp"
+                android:layout_marginTop="8dp"
                 android:background="@drawable/edittext_bgr_white"
                 android:drawableLeft="@drawable/contract_total_amount"
-                android:drawablePadding="8dp"
+                android:drawablePadding="14dp"
+                android:enabled="false"
                 android:ems="10"
                 android:hint="Tổng tiền"
                 android:inputType="text"
@@ -192,14 +199,15 @@
 
             <EditText
                 android:id="@+id/edPaymentStatus"
-                android:layout_width="343dp"
+                android:layout_width="match_parent"
                 android:layout_height="52dp"
-                android:layout_marginBottom="7dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="16dp"
                 android:background="@drawable/edittext_bgr_white"
                 android:clickable="true"
                 android:drawableLeft="@drawable/spinner_select"
                 android:drawableRight="@drawable/spinner_arrow_down"
-                android:drawablePadding="8dp"
+                android:drawablePadding="14dp"
                 android:ems="10"
                 android:focusable="false"
                 android:inputType="text"
@@ -211,10 +219,10 @@
 
         <Button
             android:id="@+id/btnAddNewContract"
-            android:layout_width="343dp"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center"
-            android:layout_marginTop="20dp"
+            android:layout_margin="16dp"
             android:background="@drawable/button_bgr_primary"
             android:text="Thêm mới"
             android:textColor="@color/white"
