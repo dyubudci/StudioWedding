@@ -1,4 +1,4 @@
-package com.example.studiowedding.view.activity.staff;
+package com.example.studiowedding.view.activity.employee;
 
 import androidx.appcompat.app.AppCompatActivity;
 
