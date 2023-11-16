@@ -1,4 +1,4 @@
-package com.example.studiowedding.view.activity.job.searchJob;
+package com.example.studiowedding.view.activity.task;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,11 +6,11 @@ import android.os.Bundle;
 
 import com.example.studiowedding.R;
 
-public class SearchJobActivity extends AppCompatActivity {
+public class SearchTaskActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search_job);
+        setContentView(R.layout.activity_search_task);
     }
 }
