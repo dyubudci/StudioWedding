@@ -6,7 +6,7 @@ import android.view.Menu;
 
 import com.example.studiowedding.R;
 import com.example.studiowedding.databinding.ActivityMainBinding;
-import com.example.studiowedding.view.fragment.ClientFragment;
+import com.example.studiowedding.view.fragment.CustomerFragment;
 import com.example.studiowedding.view.fragment.EmployeeFragment;
 import com.example.studiowedding.view.fragment.HomeFragment;
 import com.example.studiowedding.view.fragment.InvoiceFragment;
@@ -34,8 +34,6 @@ public class MainActivity extends AppCompatActivity {
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
-        setSupportActionBar(binding.toolbar2);
 
         DrawerLayout drawer = binding.drawerLayout;
         NavigationView navigationView = binding.navigationView;
@@ -75,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.navClient:
                 getSupportActionBar().setTitle("Danh sách khác hàng");
-                fragment = new ClientFragment();
+                fragment = new CustomerFragment();
                 break;
             case R.id.navServices:
                 getSupportActionBar().setTitle("Sản phẩm & Dịch vụ");
