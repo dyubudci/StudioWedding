@@ -27,9 +27,6 @@
         <activity
             android:name=".view.activity.customer.AddCustomerActivity"
             android:exported="false" />
-        <activity
-            android:name=".view.activity.customer.CustomerActivity"
-            android:exported="false" />
 
         <activity
             android:name=".view.activity.employee.UpdateEmployeeActivity"
