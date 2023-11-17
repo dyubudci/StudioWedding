@@ -1,4 +1,4 @@
-package com.example.studiowedding.Client;
+package com.example.studiowedding.customer;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -9,8 +9,8 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.example.studiowedding.R;
-import com.example.studiowedding.adapter.ListClientAdapter;
-import com.example.studiowedding.model.ListclientModel;
+import com.example.studiowedding.adapter.ListcustomerAdapter;
+import com.example.studiowedding.model.ListcustomerModel;
 
 import java.util.ArrayList;
 
@@ -32,11 +32,11 @@ public class FindPhoneActivity extends AppCompatActivity {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerViewCustomersList = findViewById(R.id.RVCustomers);
         recyclerViewCustomersList.setLayoutManager(linearLayoutManager);
-        ArrayList<ListclientModel> listCustomer = new ArrayList<>();
-        listCustomer.add(new ListclientModel("Cuong", "+ 888888888", "Đà nẵng"));
-        listCustomer.add(new ListclientModel("Cuong1", "+ 888888888", "Đà nẵng"));
-        listCustomer.add(new ListclientModel("Cuong2", "+ 888888888", "Đà nẵng"));
-        adapter = new ListClientAdapter(listCustomer);
+        ArrayList<ListcustomerModel> listCustomer = new ArrayList<>();
+        listCustomer.add(new ListcustomerModel("Cuong", "+ 888888888", "Đà nẵng"));
+        listCustomer.add(new ListcustomerModel("Cuong1", "+ 888888888", "Đà nẵng"));
+        listCustomer.add(new ListcustomerModel("Cuong2", "+ 888888888", "Đà nẵng"));
+        adapter = new ListcustomerAdapter(listCustomer);
         recyclerViewCustomersList.setAdapter(adapter);
 
 

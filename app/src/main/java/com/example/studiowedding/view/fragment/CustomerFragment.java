@@ -11,20 +11,20 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.studiowedding.R;
-import com.example.studiowedding.adapter.ListClientAdapter;
-import com.example.studiowedding.model.ListclientModel;
+import com.example.studiowedding.adapter.ListcustomerAdapter;
+import com.example.studiowedding.model.ListcustomerModel;
 
 import java.util.ArrayList;
 
 
-public class ClientFragment extends Fragment {
+public class CustomerFragment extends Fragment {
 
     private RecyclerView recyclerViewCustomersList;
     private RecyclerView.Adapter adapter;
 
 
 
-    public ClientFragment() {
+    public CustomerFragment() {
         // Required empty public constructor
     }
 
@@ -40,15 +40,15 @@ public class ClientFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_client, container, false);
+        View view = inflater.inflate(R.layout.fragment_customer, container, false);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         recyclerViewCustomersList = view.findViewById(R.id.RVCustomers);
         recyclerViewCustomersList.setLayoutManager(linearLayoutManager);
-        ArrayList<ListclientModel> listCustomer = new ArrayList<>();
-        listCustomer.add(new ListclientModel("Cuong", "+ 888888888", "Đà nẵng"));
-        listCustomer.add(new ListclientModel("Cuong1", "+ 888888888", "Đà nẵng"));
-        listCustomer.add(new ListclientModel("Cuong2", "+ 888888888", "Đà nẵng"));
-        adapter = new ListClientAdapter(listCustomer);
+        ArrayList<ListcustomerModel> listCustomer = new ArrayList<>();
+        listCustomer.add(new ListcustomerModel("Cuong", "+ 888888888", "Đà nẵng"));
+        listCustomer.add(new ListcustomerModel("Cuong1", "+ 888888888", "Đà nẵng"));
+        listCustomer.add(new ListcustomerModel("Cuong2", "+ 888888888", "Đà nẵng"));
+        adapter = new ListcustomerAdapter(listCustomer);
         recyclerViewCustomersList.setAdapter(adapter);
 
         return view;

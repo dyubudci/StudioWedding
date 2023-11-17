@@ -2,17 +2,17 @@ package com.example.studiowedding.model;
 
 import android.widget.ImageView;
 
-public class ListclientModel {
+public class ListcustomerModel {
     private String name;
     private String phone;
     private String address;
     private ImageView imgUpdateClient;
 
-    public ListclientModel(ImageView imgUpdateClient) {
+    public ListcustomerModel(ImageView imgUpdateClient) {
         this.imgUpdateClient = imgUpdateClient;
     }
 
-    public ListclientModel(String name, String phone, String address) {
+    public ListcustomerModel(String name, String phone, String address) {
         this.name = name;
         this.phone = phone;
         this.address = address;

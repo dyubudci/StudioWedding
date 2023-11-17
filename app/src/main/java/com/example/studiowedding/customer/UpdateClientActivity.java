@@ -1,4 +1,4 @@
-package com.example.studiowedding.Client;
+package com.example.studiowedding.customer;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -13,7 +13,7 @@ public class UpdateClientActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_update_client);
+        setContentView(R.layout.activity_update_customer);
         imgBack = findViewById(R.id.imgback);
         imgBack.setOnClickListener(new View.OnClickListener() {
             @Override

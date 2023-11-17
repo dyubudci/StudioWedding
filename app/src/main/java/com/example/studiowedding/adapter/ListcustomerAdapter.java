@@ -11,26 +11,24 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
-import com.example.studiowedding.Client.FindPhoneActivity;
-import com.example.studiowedding.Client.UpdateClientActivity;
+import com.example.studiowedding.customer.UpdateClientActivity;
 import com.example.studiowedding.R;
-import com.example.studiowedding.model.ListclientModel;
+import com.example.studiowedding.model.ListcustomerModel;
 
 
 import java.util.ArrayList;
 
-public class ListClientAdapter extends RecyclerView.Adapter<ListClientAdapter.Viewhodel> {
-    ArrayList<ListclientModel> listCustomersModels;
+public class ListcustomerAdapter extends RecyclerView.Adapter<ListcustomerAdapter.Viewhodel> {
+    ArrayList<ListcustomerModel> listCustomersModels;
 
-    public ListClientAdapter(ArrayList<ListclientModel> listCustomersModels) {
+    public ListcustomerAdapter(ArrayList<ListcustomerModel> listCustomersModels) {
         this.listCustomersModels = listCustomersModels;
     }
 
 
     @Override
-    public ListClientAdapter.Viewhodel onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View inflate = LayoutInflater.from(parent.getContext()).inflate(R.layout.viewhodel_listclient,parent,false);
+    public ListcustomerAdapter.Viewhodel onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View inflate = LayoutInflater.from(parent.getContext()).inflate(R.layout.viewhodel_listcustomer,parent,false);
         return new Viewhodel(inflate);
     }
     View.OnClickListener myClickListener2 = new View.OnClickListener() {
@@ -43,12 +41,12 @@ public class ListClientAdapter extends RecyclerView.Adapter<ListClientAdapter.Vi
     };
 
     @Override
-    public void onBindViewHolder(@NonNull ListClientAdapter.Viewhodel holder, int position) {
+    public void onBindViewHolder(@NonNull ListcustomerAdapter.Viewhodel holder, int position) {
         holder.TVNameCustomer.setText(listCustomersModels.get(position).getName());
         holder.TVPhoneCustome.setText(listCustomersModels.get(position).getPhone());
         holder.TVAddressCustome.setText(listCustomersModels.get(position).getAddress());
         holder.imgUpdateClient.setOnClickListener(myClickListener2);
-        ListclientModel customer = listCustomersModels.get(position);
+        ListcustomerModel customer = listCustomersModels.get(position);
         String picUrl= "";
         switch (position){
             case 0:{
