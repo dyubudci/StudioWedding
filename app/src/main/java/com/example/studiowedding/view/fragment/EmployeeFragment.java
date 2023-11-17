@@ -42,28 +42,5 @@ public class EmployeeFragment extends Fragment {
         floatingActionButton = view.findViewById(R.id.fabContract);
         ivFilter = view.findViewById(R.id.imgFilterContract);
         floatingActionButton.setOnClickListener(view1 -> startActivity(new Intent(getContext(), AddEmployeeActivity.class)));
-
-        ivFilter.setOnClickListener(view1 -> {
-            ivFilter.setOnClickListener(view2 -> {
-                Calendar calendar = Calendar.getInstance();
-                int year = calendar.get(Calendar.YEAR);
-                int month = calendar.get(Calendar.MONTH);
-                int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
-
-                DatePickerDialog datePickerDialog = new DatePickerDialog(
-                        getContext(),
-                        R.style.CustomDatePickerDialog,
-                        (DatePickerDialog.OnDateSetListener) (datePicker, selectedYear, selectedMonth, selectedDay) -> {
-
-                        },
-                        year,
-                        month,
-                        dayOfMonth
-                );
-
-                // Hiển thị DatePickerDialog
-                datePickerDialog.show();
-            });
-        });
     }
 }
