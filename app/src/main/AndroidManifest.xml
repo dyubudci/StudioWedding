@@ -5,7 +5,7 @@
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
-        android:fullBackupContent="@xml/backup_rules"
+        android:fullBackupContent="@xml/backup_rules"https://github.com/TTTN-NHOM8/Studio_Wedding_Client/pull/11/conflict?name=app%252Fsrc%252Fmain%252FAndroidManifest.xml&ancestor_oid=e80ef97a6392772f80bc438a35f94bf53e22ef17&base_oid=7025346dda17cb86f9035b5831439379583f7e8c&head_oid=f3aff69621e0b16f47920d72ba223b48c47cc718
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
@@ -21,7 +21,10 @@
         <activity
             android:name=".view.activity.account.ChangePassword"
             android:exported="false" />
-
+      
+        <activity
+            android:name=".view.activity.employee.SearchEmployeeActivity"
+            android:exported="false" />
 
         <activity
             android:name=".view.activity.customer.UpdateCustomerActivity"
@@ -33,9 +36,6 @@
 
         <activity
             android:name=".view.activity.customer.AddCustomerActivity"
-            android:exported="false" />
-        <activity
-            android:name=".view.activity.customer.CustomerActivity"
             android:exported="false" />
 
         <activity
@@ -86,7 +86,6 @@
             android:name=".view.activity.task.SeeTaskActivity"
             android:exported="false" />
         <activity
-
             android:name=".SplashActivity"
             android:exported="false" />
         <activity
