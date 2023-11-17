@@ -70,6 +70,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:exported="false"
+          />
+
+
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <activity
             android:name=".view.activity.contract.PickClientActivity"
@@ -90,9 +93,9 @@
         <activity
             android:name=".SplashActivity"
             android:exported="false" />
+
         <activity
             android:name=".view.activity.MainActivity"
-
             android:exported="true"
             android:theme="@style/Theme.StudioWedding">
             <intent-filter>
