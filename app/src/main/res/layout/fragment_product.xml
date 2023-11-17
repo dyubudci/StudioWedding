@@ -21,7 +21,23 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:text="Sản phẩm"
+
+            android:gravity="center"
+            />
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+
             android:textColor="@color/black"
+
+            android:text="Dịch vụ"
             android:textSize="20dp"
             android:gravity="center"
             />
@@ -31,18 +47,10 @@
             android:background="#0B0712"
             />
     </LinearLayout>
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:layout_weight="1"
-            android:text="Dịch vụ"
-            android:textSize="20dp"
-            android:gravity="center"
-            />
 
     </LinearLayout>
     <ListView
-        android:id="@+id/lvdanhsachaocuoi"
+        android:id="@+id/lvdichvu"
         android:layout_marginTop="60dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

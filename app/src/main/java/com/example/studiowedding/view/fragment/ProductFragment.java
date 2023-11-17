@@ -1,13 +1,12 @@
 package com.example.studiowedding.view.fragment;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+
+import androidx.fragment.app.Fragment;
 
 import com.example.studiowedding.R;
 
@@ -16,10 +15,10 @@ import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link ServicesFragment#newInstance} factory method to
+ * Use the {@link ProductFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ServicesFragment extends Fragment {
+public class ProductFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -41,8 +40,8 @@ public class ServicesFragment extends Fragment {
      * @return A new instance of fragment ServicesFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static ServicesFragment newInstance(String param1, String param2) {
-        ServicesFragment fragment = new ServicesFragment();
+    public static ProductFragment newInstance(String param1, String param2) {
+        ProductFragment fragment = new ProductFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -64,23 +63,24 @@ public class ServicesFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_services, container, false);
+        View view = inflater.inflate(R.layout.fragment_product, container, false);
 
         // Dữ liệu giả
-        List<ServiceModel> serviceList = new ArrayList<>();
-        serviceList.add(new ServiceModel("Dịch vụ 1", "9999999", "Chi tiết 1"));
-        serviceList.add(new ServiceModel("Dịch vụ 2", "999999", "Chi tiết 2"));
-        serviceList.add(new ServiceModel("Dịch vụ 3", "999999", "Chi tiết 3"));
-        serviceList.add(new ServiceModel("Dịch vụ 3", "999999", "Chi tiết 3"));
-        serviceList.add(new ServiceModel("Dịch vụ 3", "999999", "Chi tiết 3"));
-        serviceList.add(new ServiceModel("Dịch vụ 3", "999999", "Chi tiết 3"));
-        serviceList.add(new ServiceModel("Dịch vụ 3", "999999", "Chi tiết 3"));
+        List<ProductModel> productList = new ArrayList<>();
+        productList.add(new ProductModel("Váy cưới 1", "9999999"));
+        productList.add(new ProductModel("Váy cưới 2", "999999" ));
+        productList.add(new ProductModel("Váy cưới 3", "999999" ));
+        productList.add(new ProductModel("Váy cưới 4", "999999"));
+        productList.add(new ProductModel("Váy cưới 5", "999999" ));
+        productList.add(new ProductModel("Váy cưới 6", "999999"));
+        productList.add(new ProductModel("Váy cưới 7", "999999" ));
+        productList.add(new ProductModel("Váy cưới 8", "999999" ));
 
         // Tạo adapter tùy chỉnh
-        ServicesAdapter adapter = new ServicesAdapter(requireContext(), R.layout.item_services, serviceList);
+        ProductAdapter adapter = new ProductAdapter(requireContext(), R.layout.item_product, productList);
 
         // Đặt adapter cho ListView
-        ListView listView = view.findViewById(R.id.lvdanhsachaocuoi);
+        ListView listView = view.findViewById(R.id.lvdichvu);
         listView.setAdapter(adapter);
 
         return view;
