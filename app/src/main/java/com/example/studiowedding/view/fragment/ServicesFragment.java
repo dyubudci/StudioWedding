@@ -1,87 +1,62 @@
 package com.example.studiowedding.view.fragment;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
+
+import androidx.fragment.app.Fragment;
+import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.studiowedding.R;
+import com.example.studiowedding.adapter.TabServiceAdapter;
+import com.example.studiowedding.model.Services;
+import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
 
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link ServicesFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class ServicesFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private TabLayout tabLayout;
+    private ViewPager2 viewPager2;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    List<Services> list = new ArrayList<>();
 
-
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment ServicesFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static ServicesFragment newInstance(String param1, String param2) {
-        ServicesFragment fragment = new ServicesFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
+    public ServicesFragment() {
+        // Required empty public constructor
     }
 
-
+    @SuppressLint("MissingInflatedId")
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-
-    }
-
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_services, container, false);
 
-        // Dữ liệu giả
-        List<ServiceModel> serviceList = new ArrayList<>();
-        serviceList.add(new ServiceModel("Dịch vụ 1", "9999999", "Chi tiết 1"));
-        serviceList.add(new ServiceModel("Dịch vụ 2", "999999", "Chi tiết 2"));
-        serviceList.add(new ServiceModel("Dịch vụ 3", "999999", "Chi tiết 3"));
-        serviceList.add(new ServiceModel("Dịch vụ 3", "999999", "Chi tiết 3"));
-        serviceList.add(new ServiceModel("Dịch vụ 3", "999999", "Chi tiết 3"));
-        serviceList.add(new ServiceModel("Dịch vụ 3", "999999", "Chi tiết 3"));
-        serviceList.add(new ServiceModel("Dịch vụ 3", "999999", "Chi tiết 3"));
+        tabLayout = view.findViewById(R.id.tabLayout);
+        viewPager2 = view.findViewById(R.id.vp_service);
 
-        // Tạo adapter tùy chỉnh
-        ServicesAdapter adapter = new ServicesAdapter(requireContext(), R.layout.item_services, serviceList);
 
-        // Đặt adapter cho ListView
-        ListView listView = view.findViewById(R.id.lvdanhsachaocuoi);
-        listView.setAdapter(adapter);
+//        mAdapter = new MyRecyclerViewAdapter(dataSanPham, null); // Ban đầu hiển thị dữ liệu của "Sản Phẩm"
+//        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+//        recyclerView.setAdapter(mAdapter);
+
+        TabServiceAdapter adapter = new TabServiceAdapter(getActivity());
+        viewPager2.setAdapter(adapter);
+
+        new TabLayoutMediator(tabLayout, viewPager2, (tab, position) -> {
+            switch (position){
+                case 0 :
+                    tab.setText("Dịch vụ");
+                    break;
+                case 1 :
+                    tab.setText("Sản phẩm");
+                    break;
+
+            }
+        });
 
         return view;
     }

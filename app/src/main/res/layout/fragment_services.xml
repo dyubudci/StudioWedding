@@ -1,52 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".view.fragment.ServicesFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <LinearLayout
-        android:id="@+id/llsanpham"
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="10dp"
-        android:orientation="horizontal">
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:orientation="vertical">
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:text="Sản phẩm"
-            android:textColor="@color/black"
-            android:textSize="20dp"
-            android:gravity="center"
-            />
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:background="#0B0712"
-            />
-    </LinearLayout>
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:layout_weight="1"
-            android:text="Dịch vụ"
-            android:textSize="20dp"
-            android:gravity="center"
-            />
+        android:layout_height="wrap_content">
 
-    </LinearLayout>
-    <ListView
-        android:id="@+id/lvdanhsachaocuoi"
-        android:layout_marginTop="60dp"
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/tabitem_SanPham"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Sản Phẩm" />
+
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/tabitem_DichVu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Dịch Vụ" />
+    </com.google.android.material.tabs.TabLayout>
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/vp_service"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="10dp"
-        />
+        android:layout_height="match_parent" />
 
-</FrameLayout>
+
+</LinearLayout>
