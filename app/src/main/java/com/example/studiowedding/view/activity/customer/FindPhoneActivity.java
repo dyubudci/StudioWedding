@@ -1,4 +1,4 @@
-package com.example.studiowedding.customer;
+package com.example.studiowedding.view.activity.customer;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;

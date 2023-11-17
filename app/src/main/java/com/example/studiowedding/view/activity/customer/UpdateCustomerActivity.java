@@ -1,4 +1,4 @@
-package com.example.studiowedding.customer;
+package com.example.studiowedding.view.activity.customer;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -8,7 +8,7 @@ import android.widget.ImageView;
 
 import com.example.studiowedding.R;
 
-public class UpdateClientActivity extends AppCompatActivity {
+public class UpdateCustomerActivity extends AppCompatActivity {
     private ImageView imgBack;
     @Override
     protected void onCreate(Bundle savedInstanceState) {

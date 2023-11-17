@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#BCBCBC"
-    tools:context=".customer.FindPhoneActivity">
+    tools:context=".view.activity.customer.FindPhoneActivity">
 
     <LinearLayout
         android:layout_width="match_parent"

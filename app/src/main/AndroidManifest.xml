@@ -12,10 +12,10 @@
         android:theme="@style/Theme.StudioWedding"
         tools:targetApi="31">
         <activity
-            android:name=".customer.UpdateClientActivity"
+            android:name=".view.activity.customer.UpdateCustomerActivity"
             android:exported="false" />
         <activity
-            android:name=".customer.FindPhoneActivity"
+            android:name=".view.activity.customer.FindPhoneActivity"
             android:exported="false" />
         <activity
             android:name=".SplashActivity"

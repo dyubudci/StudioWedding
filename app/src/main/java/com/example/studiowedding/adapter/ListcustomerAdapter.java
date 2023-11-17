@@ -11,7 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.studiowedding.customer.UpdateClientActivity;
+import com.example.studiowedding.view.activity.customer.UpdateCustomerActivity;
 import com.example.studiowedding.R;
 import com.example.studiowedding.model.ListcustomerModel;
 
@@ -35,7 +35,7 @@ public class ListcustomerAdapter extends RecyclerView.Adapter<ListcustomerAdapte
         @Override
         public void onClick(View v) {
             Context context = v.getContext();
-            Intent intent = new Intent(context, UpdateClientActivity.class);
+            Intent intent = new Intent(context, UpdateCustomerActivity.class);
             context.startActivity(intent);
         }
     };
