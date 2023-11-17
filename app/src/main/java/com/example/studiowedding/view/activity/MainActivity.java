@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
                 fragment = new EmployeeFragment();
                 break;
             case R.id.navClient:
-                getSupportActionBar().setTitle("Danh sách khác hàng");
+                getSupportActionBar().setTitle("Danh sách khách hàng");
                 fragment = new CustomerFragment();
                 break;
             case R.id.navServices:
