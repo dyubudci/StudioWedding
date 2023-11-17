@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.example.studiowedding.R;
@@ -16,7 +17,7 @@ public class UpdateContractServiceActivity extends AppCompatActivity {
             locationEditText,
             dateOfPerformEditText;
     private RelativeLayout updateButton;
-
+    private ImageView backImageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +25,7 @@ public class UpdateContractServiceActivity extends AppCompatActivity {
         setContentView(R.layout.activity_update_contract_service);
 
         initView();
+        setListeners();
     }
 
     private void initView() {
@@ -33,5 +35,10 @@ public class UpdateContractServiceActivity extends AppCompatActivity {
         locationEditText = findViewById(R.id.locationEditText);
         dateOfPerformEditText = findViewById(R.id.dateOfPerformEditText);
         updateButton = findViewById(R.id.updateButton);
+        backImageView = findViewById(R.id.backImageView);
+    }
+
+    private void setListeners() {
+        backImageView.setOnClickListener(view -> getOnBackPressedDispatcher().onBackPressed());
     }
 }
