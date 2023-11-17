@@ -60,7 +60,7 @@
             android:layout_height="80dp"
             android:adjustViewBounds="true"
             android:scaleType="centerCrop"
-            android:src="@drawable/login_username"
+            android:src="@drawable/emp_image_picker"
             tools:ignore="UseAppTint" />
 
 
