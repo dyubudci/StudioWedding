@@ -7,7 +7,7 @@
     android:layout_margin="10dp"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context=".view.activity.Login">
+    tools:context=".view.activity.account.Login">
 
     <TextView
         android:id="@+id/textView3"

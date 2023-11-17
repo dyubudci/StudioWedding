@@ -6,8 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
-import com.example.studiowedding.view.activity.Login;
-import com.example.studiowedding.view.activity.MainActivity;
+import com.example.studiowedding.view.activity.account.Login;
 
 public class SplashActivity extends AppCompatActivity {
 

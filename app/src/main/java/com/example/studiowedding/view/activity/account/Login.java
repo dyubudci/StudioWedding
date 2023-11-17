@@ -1,4 +1,4 @@
-package com.example.studiowedding.view.activity;
+package com.example.studiowedding.view.activity.account;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -9,7 +9,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.studiowedding.R;
-import com.example.studiowedding.view.fragment.HomeFragment;
+import com.example.studiowedding.view.activity.MainActivity;
 
 public class Login extends AppCompatActivity {
 

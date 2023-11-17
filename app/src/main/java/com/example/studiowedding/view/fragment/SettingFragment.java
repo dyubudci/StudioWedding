@@ -12,8 +12,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.example.studiowedding.R;
-import com.example.studiowedding.view.activity.ChangePassword;
-import com.example.studiowedding.view.activity.EditInformation;
+import com.example.studiowedding.view.activity.account.ChangePassword;
+import com.example.studiowedding.view.activity.account.EditInformation;
 
 
 public class SettingFragment extends Fragment {
