@@ -67,49 +67,43 @@
                     android:textColor="@color/black"
                     android:textSize="15sp" />
 
-                <LinearLayout
+                <RadioGroup
+                    android:id="@+id/typeSelectionGroup"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="14dp"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:layout_marginTop="14dp">
 
-                    <RelativeLayout
+                    <RadioButton
                         android:id="@+id/productButton"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:background="@drawable/button_bgr_primary"
-                        android:paddingVertical="16dp">
+                        android:button="@null"
+                        android:gravity="center"
+                        android:checked="true"
+                        android:paddingVertical="16dp"
+                        android:text="SẢN PHẨM"
+                        android:fontFamily="@font/inter_bold"
+                        android:textColor="@color/white"
+                        android:textSize="13sp" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerInParent="true"
-                            android:fontFamily="@font/inter_bold"
-                            android:text="SẢN PHẨM"
-                            android:textColor="@color/white"
-                            android:textSize="13sp" />
-                    </RelativeLayout>
-
-                    <RelativeLayout
+                    <RadioButton
+                        android:layout_marginStart="10dp"
                         android:id="@+id/serviceButton"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
                         android:layout_weight="1"
+                        android:fontFamily="@font/inter_bold"
                         android:background="@drawable/button_bgr_linear"
-                        android:paddingVertical="16dp">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerInParent="true"
-                            android:fontFamily="@font/inter_bold"
-                            android:text="DỊCH VỤ"
-                            android:textColor="@color/white"
-                            android:textSize="13sp" />
-                    </RelativeLayout>
-                </LinearLayout>
+                        android:button="@null"
+                        android:gravity="center"
+                        android:paddingVertical="16dp"
+                        android:text="DỊCH VỤ"
+                        android:textColor="@color/white"
+                        android:textSize="13sp" />
+                </RadioGroup>
 
                 <EditText
                     android:id="@+id/productSelectEditText"

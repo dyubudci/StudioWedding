@@ -9,7 +9,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.example.studiowedding.R;
 import com.example.studiowedding.utils.FormatUtils;
@@ -19,6 +22,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.PropertyPermission;
 
 public class AddContractDetailActivity extends AppCompatActivity {
     private Toolbar toolbar;
@@ -31,7 +35,8 @@ public class AddContractDetailActivity extends AppCompatActivity {
             dateOfReturnEditText,
             locationEditText,
             dateOfPerformEditText;
-    private RelativeLayout productButton, serviceButton, addButton;
+    private RadioButton productButton, serviceButton;
+    private RelativeLayout addButton;
     private ImageView backImageView;
     Calendar calendar;
 
@@ -70,6 +75,7 @@ public class AddContractDetailActivity extends AppCompatActivity {
         dateOfHireEditText.setOnClickListener(view -> showDatePicker(dateOfHireEditText));
         dateOfReturnEditText.setOnClickListener(view -> showDatePicker(dateOfReturnEditText));
         dateOfPerformEditText.setOnClickListener(view -> showDatePicker(dateOfPerformEditText));
+        addButton.setOnClickListener(view -> performAddContractDetail());
     }
 
     private void displayProductUI() {
@@ -148,6 +154,14 @@ public class AddContractDetailActivity extends AppCompatActivity {
         }
     }
 
+    public void performAddContractDetail() {
+        if(productButton.isChecked()) {
+            Toast.makeText(this, "Thêm sản phẩm", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "Thêm dịch vụ", Toast.LENGTH_SHORT).show();
+        }
+    }
+
     // Tạo mã hợp đồng chi tiết: HDCT + ngày tháng năm giờ hiện tại
     private void generateContractDetailCode() {
         SimpleDateFormat sdf = new SimpleDateFormat("ddMMyyyyHHmmss", Locale.getDefault());
@@ -156,4 +170,5 @@ public class AddContractDetailActivity extends AppCompatActivity {
         String contractID = "HDCT" + currentDateAndTime;
         contractIdEditText.setText(contractID);
     }
+
 }
