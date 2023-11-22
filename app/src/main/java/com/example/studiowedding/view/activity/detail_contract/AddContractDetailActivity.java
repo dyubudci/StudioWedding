@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.example.studiowedding.R;
 import com.example.studiowedding.model.ContractDetail;
+import com.example.studiowedding.model.Service;
 import com.example.studiowedding.network.ApiClient;
 import com.example.studiowedding.network.ApiService;
 import com.example.studiowedding.utils.FormatUtils;
@@ -50,6 +51,7 @@ public class AddContractDetailActivity extends AppCompatActivity {
     private RelativeLayout addButton;
     private ImageView backImageView;
     private Calendar calendar;
+    private Service serviceSeleted;
     private final ActivityResultLauncher<Intent> productSelectResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
             result -> {
                 if (result.getResultCode() == Activity.RESULT_OK) {
@@ -65,8 +67,9 @@ public class AddContractDetailActivity extends AppCompatActivity {
                 if (result.getResultCode() == Activity.RESULT_OK) {
                     // Nhận dữ liệu từ ServiceSelectActivity.java
                     Intent intent = result.getData();
-                    serviceSelectEditText.setText(String.valueOf(1));
-                    servicePriceEditText.setText(FormatUtils.formatCurrencyVietnam(1000000));
+                    serviceSeleted= (Service) intent.getSerializableExtra(ServiceSelectActivity.SERVICE_SELECTED_EXTRA);
+                    serviceSelectEditText.setText(serviceSeleted.getName());
+                    servicePriceEditText.setText(FormatUtils.formatCurrencyVietnam(serviceSeleted.getPrice()));
                 }
             });
 
@@ -255,9 +258,8 @@ public class AddContractDetailActivity extends AppCompatActivity {
             String contractDetailID = contractIdEditText.getText().toString().trim();
             String location = locationEditText.getText().toString().trim();
             String dateOfPerform = dateOfPerformEditText.getText().toString().trim();
-            String serviceID = serviceSelectEditText.getText().toString().trim();
 
-            if (isValidDataInputService(serviceID, location, dateOfPerform)) {
+            if (isValidDataInputService(location, dateOfPerform)) {
                 // Chuyển định dạng ngày về hợp lệ với database MySQL mới có thể thêm vào database
                 dateOfPerform = FormatUtils.formatStringToStringMySqlFormat(dateOfPerform);
 
@@ -267,7 +269,7 @@ public class AddContractDetailActivity extends AppCompatActivity {
                         contractDetailID,
                         location,
                         dateOfPerform,
-                        Integer.parseInt(serviceID),
+                        serviceSeleted.getId(),
                         "Tạm thời"
                 );
                 call.enqueue(new Callback<ServerResponse>() {
@@ -335,8 +337,8 @@ public class AddContractDetailActivity extends AppCompatActivity {
     }
 
     // Kiểm tra tính hợp lệ của dữ liệu đầu vào với dịch vụ
-    public boolean isValidDataInputService(String serviceID, String location, String dateOfPerform) {
-        if (serviceID.isEmpty()) {
+    public boolean isValidDataInputService(String location, String dateOfPerform) {
+        if (serviceSeleted == null) {
             Toast.makeText(this, "Vui lòng chọn dịch vụ", Toast.LENGTH_SHORT).show();
             return false;
         }

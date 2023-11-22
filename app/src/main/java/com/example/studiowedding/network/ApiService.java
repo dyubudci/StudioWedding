@@ -2,6 +2,8 @@ package com.example.studiowedding.network;
 
 import com.example.studiowedding.auth.test;
 import com.example.studiowedding.model.ContractDetail;
+
+import com.example.studiowedding.model.Service;
 import com.example.studiowedding.view.activity.detail_contract.ServerResponse;
 
 import java.util.Date;
@@ -40,4 +42,7 @@ public interface ApiService {
             @Field("serviceID") int serviceID,
             @Field("contractIDTemporary") String contractIDTemporary
     );
+
+    @GET(ManagerUrl.CONTRACT_DETAIL_SERVICES)
+    Call<List<Service>> getSelectServices();
 }
