@@ -3,14 +3,13 @@ package com.example.studiowedding.network;
 import com.example.studiowedding.auth.test;
 import com.example.studiowedding.model.ContractDetail;
 
+import com.example.studiowedding.model.Product;
 import com.example.studiowedding.model.Service;
 import com.example.studiowedding.view.activity.detail_contract.ServerResponse;
 
-import java.util.Date;
 import java.util.List;
 
 import retrofit2.Call;
-import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -45,4 +44,7 @@ public interface ApiService {
 
     @GET(ManagerUrl.CONTRACT_DETAIL_SERVICES)
     Call<List<Service>> getSelectServices();
+
+    @GET(ManagerUrl.CONTRACT_DETAIL_PRODUCTS)
+    Call<List<Product>> getProductsByStatusReady();
 }

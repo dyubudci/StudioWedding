@@ -1,7 +1,6 @@
 package com.example.studiowedding.view.activity.detail_contract;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -74,6 +73,7 @@ public class ServiceSelectActivity extends AppCompatActivity implements ServiceS
         serviceSelectRecyclerView.setAdapter(serviceSelectAdapter);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
         serviceSelectRecyclerView.setLayoutManager(layoutManager);
+        serviceSelectRecyclerView.setNestedScrollingEnabled(false);
     }
 
     @Override

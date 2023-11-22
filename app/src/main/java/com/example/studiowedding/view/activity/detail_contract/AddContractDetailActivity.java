@@ -9,7 +9,6 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -18,7 +17,7 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.example.studiowedding.R;
-import com.example.studiowedding.model.ContractDetail;
+import com.example.studiowedding.model.Product;
 import com.example.studiowedding.model.Service;
 import com.example.studiowedding.network.ApiClient;
 import com.example.studiowedding.network.ApiService;
@@ -52,13 +51,15 @@ public class AddContractDetailActivity extends AppCompatActivity {
     private ImageView backImageView;
     private Calendar calendar;
     private Service serviceSeleted;
+    private Product productSeleted;
     private final ActivityResultLauncher<Intent> productSelectResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
             result -> {
                 if (result.getResultCode() == Activity.RESULT_OK) {
                     // Nhận dữ liệu từ ProductSelectActivity.java
                     Intent intent = result.getData();
-                    productSelectEditText.setText(String.valueOf(1));
-                    productPriceEditText.setText(FormatUtils.formatCurrencyVietnam(120000));
+                    productSeleted= (Product) intent.getSerializableExtra(ProductSelectActivity.PRODUCT_SELECTED_EXTRA);
+                    productSelectEditText.setText(productSeleted.getName());
+                    productPriceEditText.setText(FormatUtils.formatCurrencyVietnam(productSeleted.getPrice()));
                 }
             });
 
@@ -204,11 +205,10 @@ public class AddContractDetailActivity extends AppCompatActivity {
 //                return;
 //            }
             String contractDetailID = contractIdEditText.getText().toString().trim();
-            String productID = productSelectEditText.getText().toString().trim();
             String dateOfHire = dateOfHireEditText.getText().toString().trim();
             String dateOfReturn = dateOfReturnEditText.getText().toString().trim();
 
-            if (isValidDataInputProduct(productID, dateOfHire, dateOfReturn)) {
+            if (isValidDataInputProduct(dateOfHire, dateOfReturn)) {
                 // Chuyển định dạng ngày về hợp lệ với database MySQL mới có thể thêm vào database
                 dateOfHire = FormatUtils.formatStringToStringMySqlFormat(dateOfHire);
                 dateOfReturn = FormatUtils.formatStringToStringMySqlFormat(dateOfReturn);
@@ -219,7 +219,7 @@ public class AddContractDetailActivity extends AppCompatActivity {
                         contractDetailID,
                         dateOfHire,
                         dateOfReturn,
-                        Integer.parseInt(productID),
+                        productSeleted.getId(),
                         "Tạm thời"
                 );
                 call.enqueue(new Callback<ServerResponse>() {
@@ -304,8 +304,8 @@ public class AddContractDetailActivity extends AppCompatActivity {
     }
 
     // Kiểm tra tính hợp lệ của dữ liệu đầu vào với sản phẩm
-    public boolean isValidDataInputProduct(String productID, String dateOfHireStr, String dateOfReturnStr) {
-        if (productID.isEmpty()) {
+    public boolean isValidDataInputProduct(String dateOfHireStr, String dateOfReturnStr) {
+        if (productSeleted == null) {
             Toast.makeText(this, "Vui lòng chọn sản phẩm", Toast.LENGTH_SHORT).show();
             return false;
         }
