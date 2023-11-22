@@ -28,6 +28,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.regex.Pattern;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -49,7 +50,6 @@ public class AddContractDetailActivity extends AppCompatActivity {
     private RelativeLayout addButton;
     private ImageView backImageView;
     private Calendar calendar;
-
     private final ActivityResultLauncher<Intent> productSelectResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
             result -> {
                 if (result.getResultCode() == Activity.RESULT_OK) {
@@ -57,6 +57,16 @@ public class AddContractDetailActivity extends AppCompatActivity {
                     Intent intent = result.getData();
                     productSelectEditText.setText(String.valueOf(1));
                     productPriceEditText.setText(FormatUtils.formatCurrencyVietnam(120000));
+                }
+            });
+
+    private final ActivityResultLauncher<Intent> serviceSelectResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                if (result.getResultCode() == Activity.RESULT_OK) {
+                    // Nhận dữ liệu từ ServiceSelectActivity.java
+                    Intent intent = result.getData();
+                    serviceSelectEditText.setText(String.valueOf(1));
+                    servicePriceEditText.setText(FormatUtils.formatCurrencyVietnam(1000000));
                 }
             });
 
@@ -143,7 +153,8 @@ public class AddContractDetailActivity extends AppCompatActivity {
     }
 
     private void launcherServieSelectActivity() {
-        startActivity(new Intent(this, ServiceSelectActivity.class));
+        Intent intent = new Intent(this, ServiceSelectActivity.class);
+        serviceSelectResult.launch(intent);
     }
 
 
@@ -185,6 +196,10 @@ public class AddContractDetailActivity extends AppCompatActivity {
 
     public void performAddContractDetail() {
         if (productButton.isChecked()) {
+//            String contractIDTemporary = getIntent().getStringExtra("contractID");
+//            if (contractIDTemporary.isEmpty()) {
+//                return;
+//            }
             String contractDetailID = contractIdEditText.getText().toString().trim();
             String productID = productSelectEditText.getText().toString().trim();
             String dateOfHire = dateOfHireEditText.getText().toString().trim();
@@ -195,22 +210,23 @@ public class AddContractDetailActivity extends AppCompatActivity {
                 dateOfHire = FormatUtils.formatStringToStringMySqlFormat(dateOfHire);
                 dateOfReturn = FormatUtils.formatStringToStringMySqlFormat(dateOfReturn);
 
-                // Gọi API thêm HĐCT
+                // Gọi API thêm HĐCT với sản phẩm
                 ApiService apiService = ApiClient.getClient().create(ApiService.class);
                 Call<ServerResponse> call = apiService.insertContractDetailWithProduct(
                         contractDetailID,
                         dateOfHire,
                         dateOfReturn,
-                        Integer.parseInt(productID)
+                        Integer.parseInt(productID),
+                        "Tạm thời"
                 );
                 call.enqueue(new Callback<ServerResponse>() {
                     @Override
                     public void onResponse(Call<ServerResponse> call, Response<ServerResponse> response) {
-                        if(response.isSuccessful()) {
+                        if (response.isSuccessful()) {
                             // Xử lý dữ liệu trả về từ server
                             ServerResponse serverResponse = response.body();
-                            if(serverResponse != null) {
-                                if(serverResponse.isSuccess()) {
+                            if (serverResponse != null) {
+                                if (serverResponse.isSuccess()) {
                                     // Làm mới EditText
                                     productSelectEditText.setText(null);
                                     productPriceEditText.setText(null);
@@ -232,7 +248,56 @@ public class AddContractDetailActivity extends AppCompatActivity {
                 });
             }
         } else {
-            Toast.makeText(this, "Thêm dịch vụ", Toast.LENGTH_SHORT).show();
+//            String contractIDTemporary = getIntent().getStringExtra("contractID");
+//            if (contractIDTemporary.isEmpty()) {
+//                return;
+//            }
+            String contractDetailID = contractIdEditText.getText().toString().trim();
+            String location = locationEditText.getText().toString().trim();
+            String dateOfPerform = dateOfPerformEditText.getText().toString().trim();
+            String serviceID = serviceSelectEditText.getText().toString().trim();
+
+            if (isValidDataInputService(serviceID, location, dateOfPerform)) {
+                // Chuyển định dạng ngày về hợp lệ với database MySQL mới có thể thêm vào database
+                dateOfPerform = FormatUtils.formatStringToStringMySqlFormat(dateOfPerform);
+
+                // Gọi API thêm HĐCT với dịch vụ
+                ApiService apiService = ApiClient.getClient().create(ApiService.class);
+                Call<ServerResponse> call = apiService.insertContractDetailWithService(
+                        contractDetailID,
+                        location,
+                        dateOfPerform,
+                        Integer.parseInt(serviceID),
+                        "Tạm thời"
+                );
+                call.enqueue(new Callback<ServerResponse>() {
+                    @Override
+                    public void onResponse(Call<ServerResponse> call, Response<ServerResponse> response) {
+                        if (response.isSuccessful()) {
+                            // Xử lý dữ liệu trả về từ server
+                            ServerResponse serverResponse = response.body();
+                            if (serverResponse != null) {
+                                if (serverResponse.isSuccess()) {
+                                    // Làm mới EditText
+                                    serviceSelectEditText.setText(null);
+                                    servicePriceEditText.setText(null);
+                                    locationEditText.setText(null);
+                                    dateOfPerformEditText.setText(null);
+                                    generateContractDetailCode();
+                                    Toast.makeText(AddContractDetailActivity.this, "Thêm HĐCT thành công", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(AddContractDetailActivity.this, "Thêm HĐCT có lỗi", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ServerResponse> call, Throwable t) {
+
+                    }
+                });
+            }
         }
     }
 
@@ -267,6 +332,43 @@ public class AddContractDetailActivity extends AppCompatActivity {
         }
 
         return true;
+    }
+
+    // Kiểm tra tính hợp lệ của dữ liệu đầu vào với dịch vụ
+    public boolean isValidDataInputService(String serviceID, String location, String dateOfPerform) {
+        if (serviceID.isEmpty()) {
+            Toast.makeText(this, "Vui lòng chọn dịch vụ", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if (location.isEmpty()) {
+            Toast.makeText(this, "Vui lòng nhập địa điểm", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if (!isValidLocation(location)) {
+            Toast.makeText(this, "Địa điểm không hợp lệ", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if (dateOfPerform.isEmpty()) {
+            Toast.makeText(this, "Vui lòng chọn thực hiện", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Xác thực nội dung địa điểm có hợp lệ hay không
+     *
+     * @param location nôi dụng địa điểm cần kiểm tra
+     * @return true nếu không chưa ký tự đặt biệt, flase chưa ký tự đặt biệt
+     */
+    public boolean isValidLocation(String location) {
+        // Định dạng cho phép chứa ký tự chữ hoặc số
+        final Pattern VALID_LOCATION_PATTERN = Pattern.compile("^[\\w\\s\\u0100-\\u1FFF,.-]+$");
+        return VALID_LOCATION_PATTERN.matcher(location).matches();
     }
 
     // Tạo mã hợp đồng chi tiết: HDCT + ngày tháng năm giờ hiện tại

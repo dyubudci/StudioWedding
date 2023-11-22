@@ -22,11 +22,22 @@ public interface ApiService {
     Call<List<ContractDetail>> getContractDetails();
 
     @FormUrlEncoded
-    @POST(ManagerUrl.INSERT_CONTRACT_DETAIL)
+    @POST(ManagerUrl.INSERT_CONTRACT_DETAIL_PRODUCT)
     Call<ServerResponse> insertContractDetailWithProduct(
             @Field("contractDetailID") String contractDetailID,
             @Field("dateOfHire") String dateOfHire,
             @Field("dateOfReturn") String dateOfReturn,
-            @Field("productID") int productID
+            @Field("productID") int productID,
+            @Field("contractIDTemporary") String contractIDTemporary
+    );
+
+    @FormUrlEncoded
+    @POST(ManagerUrl.INSERT_CONTRACT_DETAIL_SERVICE)
+    Call<ServerResponse> insertContractDetailWithService(
+            @Field("contractDetailID") String contractDetailID,
+            @Field("location") String location,
+            @Field("dateOfPerform") String dateOfPerform,
+            @Field("serviceID") int serviceID,
+            @Field("contractIDTemporary") String contractIDTemporary
     );
 }
