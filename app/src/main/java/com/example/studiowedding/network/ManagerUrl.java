@@ -6,4 +6,5 @@ public class ManagerUrl {
 
     // Detail Contract
     public static final String CONTRACT_DETAILS_URL = "contract-details";
+    public static final String INSERT_CONTRACT_DETAIL = "contract-details/with-product";
 }

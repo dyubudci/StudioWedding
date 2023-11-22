@@ -1,20 +1,26 @@
 package com.example.studiowedding.view.activity.detail_contract;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.example.studiowedding.R;
+import com.example.studiowedding.model.ContractDetail;
+import com.example.studiowedding.network.ApiClient;
+import com.example.studiowedding.network.ApiService;
 import com.example.studiowedding.utils.FormatUtils;
 
 import java.text.ParseException;
@@ -22,7 +28,10 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
-import java.util.PropertyPermission;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class AddContractDetailActivity extends AppCompatActivity {
     private Toolbar toolbar;
@@ -30,15 +39,26 @@ public class AddContractDetailActivity extends AppCompatActivity {
             contractIdEditText,
             productSelectEditText,
             serviceSelectEditText,
-            priceEditText,
+            productPriceEditText,
             dateOfHireEditText,
             dateOfReturnEditText,
             locationEditText,
-            dateOfPerformEditText;
+            dateOfPerformEditText,
+            servicePriceEditText;
     private RadioButton productButton, serviceButton;
     private RelativeLayout addButton;
     private ImageView backImageView;
-    Calendar calendar;
+    private Calendar calendar;
+
+    private final ActivityResultLauncher<Intent> productSelectResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                if (result.getResultCode() == Activity.RESULT_OK) {
+                    // Nhận dữ liệu từ ProductSelectActivity.java
+                    Intent intent = result.getData();
+                    productSelectEditText.setText(String.valueOf(1));
+                    productPriceEditText.setText(FormatUtils.formatCurrencyVietnam(120000));
+                }
+            });
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +75,7 @@ public class AddContractDetailActivity extends AppCompatActivity {
         contractIdEditText = findViewById(R.id.contractIdEditText);
         productSelectEditText = findViewById(R.id.productSelectEditText);
         serviceSelectEditText = findViewById(R.id.serviceSelectEditText);
-        priceEditText = findViewById(R.id.priceEditText);
+        productPriceEditText = findViewById(R.id.productPriceEditText);
         dateOfHireEditText = findViewById(R.id.dateOfHireEditText);
         dateOfReturnEditText = findViewById(R.id.dateOfReturnEditText);
         locationEditText = findViewById(R.id.locationEditText);
@@ -64,6 +84,7 @@ public class AddContractDetailActivity extends AppCompatActivity {
         serviceButton = findViewById(R.id.serviceButton);
         addButton = findViewById(R.id.addButton);
         backImageView = findViewById(R.id.backImageView);
+        servicePriceEditText = findViewById(R.id.servicePriceEditText);
     }
 
     private void setListeners() {
@@ -83,11 +104,13 @@ public class AddContractDetailActivity extends AppCompatActivity {
         productSelectEditText.setVisibility(View.VISIBLE);
         dateOfHireEditText.setVisibility(View.VISIBLE);
         dateOfReturnEditText.setVisibility(View.VISIBLE);
+        productPriceEditText.setVisibility(View.VISIBLE);
 
         // Ẩn view thông tin dịch vụ
         serviceSelectEditText.setVisibility(View.GONE);
         locationEditText.setVisibility(View.GONE);
         dateOfPerformEditText.setVisibility(View.GONE);
+        servicePriceEditText.setVisibility(View.GONE);
 
         // Gán background cho button tương ứng
         productButton.setBackgroundResource(R.drawable.button_bgr_primary);
@@ -100,11 +123,13 @@ public class AddContractDetailActivity extends AppCompatActivity {
         serviceSelectEditText.setVisibility(View.VISIBLE);
         locationEditText.setVisibility(View.VISIBLE);
         dateOfPerformEditText.setVisibility(View.VISIBLE);
+        servicePriceEditText.setVisibility(View.VISIBLE);
 
         // Ẩn view thông tin sản phẩm
         productSelectEditText.setVisibility(View.GONE);
         dateOfHireEditText.setVisibility(View.GONE);
         dateOfReturnEditText.setVisibility(View.GONE);
+        productPriceEditText.setVisibility(View.GONE);
 
         // Gán background cho button tương ứng
         productButton.setBackgroundResource(R.drawable.button_bgr_linear);
@@ -113,7 +138,8 @@ public class AddContractDetailActivity extends AppCompatActivity {
     }
 
     private void launcherProductSelectActivity() {
-        startActivity(new Intent(this, ProductSelectActivity.class));
+        Intent intent = new Intent(this, ProductSelectActivity.class);
+        productSelectResult.launch(intent);
     }
 
     private void launcherServieSelectActivity() {
@@ -148,6 +174,9 @@ public class AddContractDetailActivity extends AppCompatActivity {
                     calendar.get(Calendar.MONTH),
                     calendar.get(Calendar.DAY_OF_MONTH)
             );
+
+            // Thiết lập giới hạn ngày tối thiểu là ngày hiện tại
+            datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis());
             datePickerDialog.show();
         } catch (ParseException e) {
             throw new RuntimeException(e);
@@ -155,11 +184,89 @@ public class AddContractDetailActivity extends AppCompatActivity {
     }
 
     public void performAddContractDetail() {
-        if(productButton.isChecked()) {
-            Toast.makeText(this, "Thêm sản phẩm", Toast.LENGTH_SHORT).show();
+        if (productButton.isChecked()) {
+            String contractDetailID = contractIdEditText.getText().toString().trim();
+            String productID = productSelectEditText.getText().toString().trim();
+            String dateOfHire = dateOfHireEditText.getText().toString().trim();
+            String dateOfReturn = dateOfReturnEditText.getText().toString().trim();
+
+            if (isValidDataInputProduct(productID, dateOfHire, dateOfReturn)) {
+                // Chuyển định dạng ngày về hợp lệ với database MySQL mới có thể thêm vào database
+                dateOfHire = FormatUtils.formatStringToStringMySqlFormat(dateOfHire);
+                dateOfReturn = FormatUtils.formatStringToStringMySqlFormat(dateOfReturn);
+
+                // Gọi API thêm HĐCT
+                ApiService apiService = ApiClient.getClient().create(ApiService.class);
+                Call<ServerResponse> call = apiService.insertContractDetailWithProduct(
+                        contractDetailID,
+                        dateOfHire,
+                        dateOfReturn,
+                        Integer.parseInt(productID)
+                );
+                call.enqueue(new Callback<ServerResponse>() {
+                    @Override
+                    public void onResponse(Call<ServerResponse> call, Response<ServerResponse> response) {
+                        if(response.isSuccessful()) {
+                            // Xử lý dữ liệu trả về từ server
+                            ServerResponse serverResponse = response.body();
+                            if(serverResponse != null) {
+                                if(serverResponse.isSuccess()) {
+                                    // Làm mới EditText
+                                    productSelectEditText.setText(null);
+                                    productPriceEditText.setText(null);
+                                    dateOfHireEditText.setText(null);
+                                    dateOfReturnEditText.setText(null);
+                                    generateContractDetailCode();
+                                    Toast.makeText(AddContractDetailActivity.this, "Thêm HĐCT thành công", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(AddContractDetailActivity.this, "Thêm HĐCT có lỗi", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ServerResponse> call, Throwable t) {
+
+                    }
+                });
+            }
         } else {
             Toast.makeText(this, "Thêm dịch vụ", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    // Kiểm tra tính hợp lệ của dữ liệu đầu vào với sản phẩm
+    public boolean isValidDataInputProduct(String productID, String dateOfHireStr, String dateOfReturnStr) {
+        if (productID.isEmpty()) {
+            Toast.makeText(this, "Vui lòng chọn sản phẩm", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if (dateOfHireStr.isEmpty()) {
+            Toast.makeText(this, "Vui lòng chọn ngày thuê", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if (dateOfReturnStr.isEmpty()) {
+            Toast.makeText(this, "Vui lòng chọn ngày trả", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        try {
+            Date dateOfHire = FormatUtils.parserStringToDate(dateOfHireStr);
+            Date dateOfReturn = FormatUtils.parserStringToDate(dateOfReturnStr);
+
+            if (dateOfReturn.before(dateOfHire)) {
+                Toast.makeText(this, "Ngày trả sản phẩm không hợp lệ", Toast.LENGTH_SHORT).show();
+                return false;
+            }
+
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+
+        return true;
     }
 
     // Tạo mã hợp đồng chi tiết: HDCT + ngày tháng năm giờ hiện tại
@@ -170,5 +277,4 @@ public class AddContractDetailActivity extends AppCompatActivity {
         String contractID = "HDCT" + currentDateAndTime;
         contractIdEditText.setText(contractID);
     }
-
 }

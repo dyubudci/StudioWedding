@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.studiowedding.R;
 import com.example.studiowedding.model.ContractDetail;
+import com.example.studiowedding.utils.FormatUtils;
 
 import java.util.List;
 
@@ -38,6 +39,17 @@ public class ContractDetailAdapter extends RecyclerView.Adapter<ContractDetailAd
     @Override
     public void onBindViewHolder(@NonNull ContractDetailViewHolder holder, int position) {
         if (contractDetails != null) {
+            // Ẩn view
+            holder.dateOfHireTextView.setVisibility(View.GONE);
+            holder.dateOfReturnTextView.setVisibility(View.GONE);
+            holder.productNameTextView.setVisibility(View.GONE);
+            holder.productPriceTextView.setVisibility(View.GONE);
+
+            holder.locationTextView.setVisibility(View.GONE);
+            holder.dateOfPerformTextView.setVisibility(View.GONE);
+            holder.serviceName.setVisibility(View.GONE);
+            holder.servicePrice.setVisibility(View.GONE);
+
             ContractDetail contractDetail = contractDetails.get(position);
             /*
              * Nếu địa điểm null thì sẽ là HĐCT với gói sản phẩm
@@ -54,7 +66,7 @@ public class ContractDetailAdapter extends RecyclerView.Adapter<ContractDetailAd
                 holder.dateOfHireTextView.setText(contractDetail.getDateOfHire());
                 holder.dateOfReturnTextView.setText(contractDetail.getDateOfReturn());
                 holder.productNameTextView.setText(contractDetail.getProductName());
-                holder.productPriceTextView.setText(contractDetail.getProductPrice() + "");
+                holder.productPriceTextView.setText(FormatUtils.formatCurrencyVietnam(contractDetail.getProductPrice()));
             } else {
                 // Hiển thị view HĐCT với dịch vụ
                 holder.locationTextView.setVisibility(View.VISIBLE);
@@ -66,7 +78,7 @@ public class ContractDetailAdapter extends RecyclerView.Adapter<ContractDetailAd
                 holder.locationTextView.setText(contractDetail.getLocation());
                 holder.dateOfPerformTextView.setText(contractDetail.getDateOfPerform());
                 holder.serviceName.setText(contractDetail.getServiceName());
-                holder.servicePrice.setText(contractDetail.getServicePrice() + "");
+                holder.servicePrice.setText(FormatUtils.formatCurrencyVietnam(contractDetail.getServicePrice()));
             }
 
             holder.imgPopupMenuDetailContractItem.setOnClickListener(view -> {
@@ -93,20 +105,12 @@ public class ContractDetailAdapter extends RecyclerView.Adapter<ContractDetailAd
             dateOfReturnTextView = itemView.findViewById(R.id.dateOfReturnTextView);
             productNameTextView = itemView.findViewById(R.id.productNameTextView);
             productPriceTextView = itemView.findViewById(R.id.productPriceTextView);
-            dateOfHireTextView.setVisibility(View.GONE);
-            dateOfReturnTextView.setVisibility(View.GONE);
-            productNameTextView.setVisibility(View.GONE);
-            productPriceTextView.setVisibility(View.GONE);
 
             // View dịch vụ
             locationTextView = itemView.findViewById(R.id.locationTextView);
             dateOfPerformTextView = itemView.findViewById(R.id.dateOfPerformTextView);
             serviceName = itemView.findViewById(R.id.serviceNameTextView);
             servicePrice = itemView.findViewById(R.id.servicePriceTextView);
-            locationTextView.setVisibility(View.GONE);
-            dateOfPerformTextView.setVisibility(View.GONE);
-            serviceName.setVisibility(View.GONE);
-            servicePrice.setVisibility(View.GONE);
 
             // Img menu
             imgPopupMenuDetailContractItem = itemView.findViewById(R.id.imgPopupMenuDetailContractItem);
