@@ -12,21 +12,32 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.example.studiowedding.R;
 import com.example.studiowedding.adapter.TaskAdapter;
+import com.example.studiowedding.constant.AppConstants;
 import com.example.studiowedding.interfaces.OnItemClickListner;
 import com.example.studiowedding.model.Task;
+import com.example.studiowedding.network.ApiClient;
+import com.example.studiowedding.network.ApiService;
+import com.example.studiowedding.utils.UIutils;
+import com.example.studiowedding.view.activity.task.ResponseTask;
 import com.example.studiowedding.view.activity.task.UpdateTaskActivity;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class TaskFragment extends Fragment implements OnItemClickListner.TaskI {
 
@@ -49,8 +60,8 @@ public class TaskFragment extends Fragment implements OnItemClickListner.TaskI {
         super.onViewCreated(view, savedInstanceState);
         mRCV = view.findViewById(R.id.rcv_task);
         ivFilter = view.findViewById(R.id.iv_filter_task);
-        setAdapter();
         onClick();
+        readTasksApi();
     }
 
     private void onClick() {
@@ -63,7 +74,7 @@ public class TaskFragment extends Fragment implements OnItemClickListner.TaskI {
             DatePickerDialog datePickerDialog = new DatePickerDialog(
                     getContext(),
                     R.style.CustomDatePickerDialog,
-                    (DatePickerDialog.OnDateSetListener) (datePicker, selectedYear, selectedMonth, selectedDay) -> {
+                    (datePicker, selectedYear, selectedMonth, selectedDay) -> {
 
                     },
                     year,
@@ -71,26 +82,37 @@ public class TaskFragment extends Fragment implements OnItemClickListner.TaskI {
                     dayOfMonth
             );
 
-            // Hiển thị DatePickerDialog
             datePickerDialog.show();
         });
     }
 
-    private void setAdapter() {
-        List<Task> list = new ArrayList<>();
-        List<String> listEmployee = new ArrayList<>();
-        listEmployee.add("AnhNN");
-        listEmployee.add("NamNN");
-
-        list.add(new Task("HD001", "12/12/2023","Đang thực hiện", "Chụp hình cưới", "Sơn Trà - Đà Nẵng", listEmployee));
-        list.add(new Task("HD002", "12/12/2023","Đã xong", "Chụp hình cưới", "Sơn Trà - Đà Nẵng", listEmployee));
-        list.add(new Task("HD003", "12/12/2023","Đang thực hiện", "Chụp hình cưới", "Sơn Trà - Đà Nẵng", listEmployee));
-
-        TaskAdapter adapterTask = new TaskAdapter(list);
+    private void setAdapter(List<Task> taskList) {
+        TaskAdapter adapterTask = new TaskAdapter(taskList);
         adapterTask.setOnClickItem(this);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         mRCV.setLayoutManager(layoutManager);
         mRCV.setAdapter(adapterTask);
+    }
+
+    private void readTasksApi() {
+        ApiClient.getClient().create(ApiService.class).readTask().enqueue(new Callback<ResponseTask>() {
+            @Override
+            public void onResponse(@NonNull Call<ResponseTask> call, @NonNull Response<ResponseTask> response) {
+                if (response.isSuccessful()){
+                    assert response.body() != null;
+                    if (AppConstants.STATUS_TASK.equals(response.body().getStatus())){
+                        setAdapter(response.body().getTaskList());
+                    }else {
+                        Toast.makeText(getContext(), "Call Api Failure", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ResponseTask> call, @NonNull Throwable t) {
+                Log.e("Error", t.toString());
+            }
+        });
     }
 
     @Override
@@ -101,16 +123,11 @@ public class TaskFragment extends Fragment implements OnItemClickListner.TaskI {
     @Override
     public void showConfirmDelete() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        builder.setTitle("Xóa công việc");
-        builder.setMessage("Bạn chắc chắn muốn xóa công việc này ?");
 
-        builder.setPositiveButton("Đồng ý", (dialog, which) -> {
-            dialog.dismiss();
-        });
-
-        builder.setNegativeButton("Hủy", (dialog, which) -> {
-            dialog.dismiss();
-        });
+        builder.setTitle("Xóa công việc")
+                .setMessage("Bạn chắc chắn muốn xóa công việc này ?")
+                .setPositiveButton("Đồng ý", (dialog, which) -> dialog.dismiss())
+                .setNegativeButton("Hủy", (dialog, which) -> dialog.dismiss());
 
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
