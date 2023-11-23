@@ -22,6 +22,8 @@ public class ContractDetail {
     private int productID;
     @SerializedName("idHopDong")
     private String contractID;
+    @SerializedName("idHDTamThoi")
+    private String contractIDTemporary;
 
     // Thông tin dịch vụ
     @SerializedName("tenDichVu")
@@ -145,6 +147,14 @@ public class ContractDetail {
         this.productPrice = productPrice;
     }
 
+    public String getContractIDTemporary() {
+        return contractIDTemporary;
+    }
+
+    public void setContractIDTemporary(String contractIDTemporary) {
+        this.contractIDTemporary = contractIDTemporary;
+    }
+
     @Override
     public String toString() {
         return "ContractDetail{" +
@@ -156,6 +166,7 @@ public class ContractDetail {
                 ", serviceID=" + serviceID +
                 ", productID=" + productID +
                 ", contractID='" + contractID + '\'' +
+                ", contractIDTemporary='" + contractIDTemporary + '\'' +
                 ", serviceName='" + serviceName + '\'' +
                 ", servicePrice=" + servicePrice +
                 ", productName='" + productName + '\'' +
