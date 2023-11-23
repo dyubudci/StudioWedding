@@ -1,7 +1,7 @@
 package com.example.studiowedding.network;
 
 public class ManagerUrl {
-    public static final String BASE_URL = "http://192.168.1.4:3000/api/";
+    public static final String BASE_URL = "http://172.16.49.154:3000/api/";
 
     // Contract
     public  static  final String CONTRACTS="contracts";
@@ -16,6 +16,7 @@ public class ManagerUrl {
     public  static  final String INCURRENT_ADD="incurrent/add";
     public  static  final String INCURRENT_DELETE="incurrent/delete/{idPhatSinh}";
     public  static  final String CONTRACT_CLIENTS="contracts/clients";
+    public  static  final String CONTRACT_DETAIL_CONTRACT="contracts/detail-contract/{idHDTamThoi}";
 
 
 
