@@ -269,7 +269,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout10">
 
-        <EditText
+        <TextView
             android:id="@+id/editTextText12"
             android:layout_width="320dp"
             android:layout_height="wrap_content"

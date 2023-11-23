@@ -73,7 +73,7 @@
           />
 
 
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
         <activity
             android:name=".view.activity.contract.PickClientActivity"
             android:exported="false" />
@@ -91,11 +91,11 @@
             android:name=".view.activity.task.SeeTaskActivity"
             android:exported="false" />
         <activity
-            android:name=".SplashActivity"
+            android:name=".view.activity.MainActivity"
             android:exported="false" />
 
         <activity
-            android:name=".view.activity.MainActivity"
+            android:name=".SplashActivity"
             android:exported="true"
             android:theme="@style/Theme.StudioWedding">
             <intent-filter>

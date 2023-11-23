@@ -35,19 +35,6 @@ public class EditInformation extends AppCompatActivity {
         });
 
 
-//        DatePickerDialog datePickerDialog = new DatePickerDialog(this,
-//                new DatePickerDialog.OnDateSetListener() {
-//                    @Override
-//                    public void onDateSet(DatePicker view, int selectedYear, int selectedMonth, int selectedDay) {
-//                        // Xử lý ngày được chọn
-//                        String selectedDate = selectedDay + "/" + (selectedMonth + 1) + "/" + selectedYear;
-//                        // Hiển thị ngày đã chọn (bạn có thể làm điều gì đó khác với ngày này)
-//                        yourTextView.setText(selectedDate);
-//                    }
-//                }, year, month, day);
-//
-//        datePickerDialog.show();
-//
     }
 
 
