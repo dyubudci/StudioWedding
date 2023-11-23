@@ -175,7 +175,7 @@ public class AddContractActivity extends AppCompatActivity implements View.OnCli
         String trangThaiThanhToan=edPaymentStatus.getText().toString();
         String trangThaiHopDong="Đang thực hiện";
 
-        Contract contract=new Contract(idHD,ngayThanhToan,tienCoc,giamGia,tongTien,trangThaiThanhToan,trangThaiHopDong,idKH);
+        Contract contract=new Contract(idHD,formatNgayThanhToan,tienCoc,giamGia,tongTien,trangThaiThanhToan,trangThaiHopDong,idKH);
         insertNewContract(contract);
     }
 
