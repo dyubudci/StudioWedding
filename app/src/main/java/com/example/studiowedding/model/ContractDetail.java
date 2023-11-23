@@ -51,6 +51,11 @@ public class ContractDetail {
         this.contractID = contractID;
     }
 
+    public ContractDetail(String contractID) {
+        this.contractID = contractID;
+    }
+
+
     public String getId() {
         return id;
     }

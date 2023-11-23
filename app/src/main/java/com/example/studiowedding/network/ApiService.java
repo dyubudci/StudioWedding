@@ -10,10 +10,13 @@ import com.example.studiowedding.model.Product;
 import com.example.studiowedding.model.Service;
 import com.example.studiowedding.view.activity.detail_contract.ServerResponse;
 
+import java.net.IDN;
 import java.util.List;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Field;
@@ -93,4 +96,8 @@ public interface ApiService {
 
     @GET(ManagerUrl.CONTRACT_DETAIL_PRODUCTS)
     Call<List<Product>> getProductsByStatusReady();
+    @PUT(ManagerUrl.CONTRACT_DETAIL_IDHD)
+    Call<Void> updateContractIDContractDetail(@Path("contractIDTemporary") String contractIDTemporary, @Body ContractDetail contractID);
+    @DELETE(ManagerUrl.CONTRACT_DETAIL_REMOVE)
+    Call<Void>deleteHDCT(@Path("contractIDTemporary") String idHDTT);
 }
