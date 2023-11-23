@@ -14,6 +14,7 @@ import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Field;
@@ -93,4 +94,25 @@ public interface ApiService {
 
     @GET(ManagerUrl.CONTRACT_DETAIL_PRODUCTS)
     Call<List<Product>> getProductsByStatusReady();
+
+    @DELETE(ManagerUrl.DELETE_CONTRACT_DETAIL_BY_CONTRACT_DETAIL_ID)
+    Call<ServerResponse> deleteContractDetailByContractDetailID(@Path("contractDetailID") String contractDetailID);
+
+    @FormUrlEncoded
+    @PUT(ManagerUrl.UPDATE_CONTRACT_DETAIL_PRODUCT)
+    Call<ServerResponse> updateContractDetailWithProduct(
+            @Path("contractDetailID") String contractDetailID,
+            @Field("dateOfHire") String dateOfHire,
+            @Field("dateOfReturn") String dateOfReturn,
+            @Field("productID") int productID
+    );
+
+    @FormUrlEncoded
+    @PUT(ManagerUrl.UPDATE_CONTRACT_DETAIL_SERVICE)
+    Call<ServerResponse> updateContractDetailWithService(
+            @Path("contractDetailID") String contractDetailID,
+            @Field("location") String location,
+            @Field("dateOfPerform") String dateOfPerform,
+            @Field("serviceID") int serviceID
+    );
 }

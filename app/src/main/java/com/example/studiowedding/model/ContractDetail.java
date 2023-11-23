@@ -3,9 +3,10 @@ package com.example.studiowedding.model;
 import com.example.studiowedding.utils.FormatUtils;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class ContractDetail {
+public class ContractDetail implements Serializable {
     @SerializedName("idHopDongChiTiet")
     private String id;
     @SerializedName("diaDiem")

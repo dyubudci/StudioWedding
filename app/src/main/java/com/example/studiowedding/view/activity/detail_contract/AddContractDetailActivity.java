@@ -237,6 +237,8 @@ public class AddContractDetailActivity extends AppCompatActivity {
                                     dateOfReturnEditText.setText(null);
                                     generateContractDetailCode();
                                     Toast.makeText(AddContractDetailActivity.this, "Thêm HĐCT thành công", Toast.LENGTH_SHORT).show();
+                                    // TODO: Cập nhật lại trạng thái sản phẩm "Đã thuê"
+                                    // TODO: Thêm công việc mặt định giặt ủi
                                 } else {
                                     Toast.makeText(AddContractDetailActivity.this, "Thêm HĐCT có lỗi", Toast.LENGTH_SHORT).show();
                                 }
@@ -287,6 +289,7 @@ public class AddContractDetailActivity extends AppCompatActivity {
                                     dateOfPerformEditText.setText(null);
                                     generateContractDetailCode();
                                     Toast.makeText(AddContractDetailActivity.this, "Thêm HĐCT thành công", Toast.LENGTH_SHORT).show();
+                                    // TODO: Thêm công việc
                                 } else {
                                     Toast.makeText(AddContractDetailActivity.this, "Thêm HĐCT có lỗi", Toast.LENGTH_SHORT).show();
                                 }
