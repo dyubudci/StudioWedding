@@ -56,7 +56,7 @@ public class ContractDetailAdapter extends RecyclerView.Adapter<ContractDetailAd
              * Ngược lại sẽ là HĐCT với gói dịch vụ
              */
             if (contractDetail.getLocation() == null) {
-                // Hiển thị view HĐCt với gói sản phẩm
+                // Hiển thị view HĐCT với gói sản phẩm
                 holder.dateOfHireTextView.setVisibility(View.VISIBLE);
                 holder.dateOfReturnTextView.setVisibility(View.VISIBLE);
                 holder.productNameTextView.setVisibility(View.VISIBLE);
@@ -80,7 +80,6 @@ public class ContractDetailAdapter extends RecyclerView.Adapter<ContractDetailAd
                 holder.serviceName.setText(contractDetail.getServiceName());
                 holder.servicePrice.setText(FormatUtils.formatCurrencyVietnam(contractDetail.getServicePrice()));
             }
-
             holder.imgPopupMenuDetailContractItem.setOnClickListener(view -> {
                 showAlertDialogMenuMore(holder, contractDetail);
             });
