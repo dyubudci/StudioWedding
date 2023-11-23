@@ -22,6 +22,11 @@ public class ContractDetailAdapter extends RecyclerView.Adapter<ContractDetailAd
     public static final String MENU_BODY_DELETE_TITLE = "Xoá";
     public static final String MENU_HEADER_TITLE = "Menu";
     private List<ContractDetail> contractDetails;
+    private final ItemListener itemListener;
+
+    public ContractDetailAdapter(ItemListener itemListener) {
+        this.itemListener = itemListener;
+    }
 
     public void setContractDetails(List<ContractDetail> contractDetails) {
         this.contractDetails = contractDetails;
@@ -124,10 +129,10 @@ public class ContractDetailAdapter extends RecyclerView.Adapter<ContractDetailAd
                 .setItems(options, (dialog, which) -> {
                     switch (which) {
                         case 0:
-                            Log.d("ContractAdapter", "onClick: Cập nhật" + contractDetail);
+                            itemListener.startUpdateContractDetailActivity(contractDetail);
                             break;
                         case 1:
-                            Log.d("ContractAdapter", "onClick: Xoá" + contractDetail);
+                            itemListener.showConfirmDeleteContractDetail(contractDetail);
                             break;
                         default:
                             break;
@@ -135,5 +140,10 @@ public class ContractDetailAdapter extends RecyclerView.Adapter<ContractDetailAd
                 });
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
+    }
+
+    public interface ItemListener {
+        void startUpdateContractDetailActivity(ContractDetail contractDetail);
+        void showConfirmDeleteContractDetail(ContractDetail contractDetail);
     }
 }

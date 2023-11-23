@@ -96,6 +96,27 @@ public interface ApiService {
 
     @GET(ManagerUrl.CONTRACT_DETAIL_PRODUCTS)
     Call<List<Product>> getProductsByStatusReady();
+
+    @DELETE(ManagerUrl.DELETE_CONTRACT_DETAIL_BY_CONTRACT_DETAIL_ID)
+    Call<ServerResponse> deleteContractDetailByContractDetailID(@Path("contractDetailID") String contractDetailID);
+
+    @FormUrlEncoded
+    @PUT(ManagerUrl.UPDATE_CONTRACT_DETAIL_PRODUCT)
+    Call<ServerResponse> updateContractDetailWithProduct(
+            @Path("contractDetailID") String contractDetailID,
+            @Field("dateOfHire") String dateOfHire,
+            @Field("dateOfReturn") String dateOfReturn,
+            @Field("productID") int productID
+    );
+
+    @FormUrlEncoded
+    @PUT(ManagerUrl.UPDATE_CONTRACT_DETAIL_SERVICE)
+    Call<ServerResponse> updateContractDetailWithService(
+            @Path("contractDetailID") String contractDetailID,
+            @Field("location") String location,
+            @Field("dateOfPerform") String dateOfPerform,
+            @Field("serviceID") int serviceID
+    );
     @PUT(ManagerUrl.CONTRACT_DETAIL_IDHD)
     Call<Void> updateContractIDContractDetail(@Path("contractIDTemporary") String contractIDTemporary, @Body ContractDetail contractID);
     @DELETE(ManagerUrl.CONTRACT_DETAIL_REMOVE)

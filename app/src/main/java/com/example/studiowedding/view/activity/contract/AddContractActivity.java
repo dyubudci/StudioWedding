@@ -9,7 +9,9 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -36,6 +38,9 @@ import com.example.studiowedding.network.ApiClient;
 import com.example.studiowedding.network.ApiService;
 import com.example.studiowedding.utils.FormatUtils;
 import com.example.studiowedding.view.activity.detail_contract.AddContractDetailActivity;
+import com.example.studiowedding.view.activity.detail_contract.ServerResponse;
+import com.example.studiowedding.view.activity.detail_contract.UpdateContractProductActivity;
+import com.example.studiowedding.view.activity.detail_contract.UpdateContractServiceActivity;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -50,15 +55,17 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class AddContractActivity extends AppCompatActivity implements View.OnClickListener {
-    private EditText edIdHD,edPaymentStatus,edPickClient,edDateCreate,edDop, edDeposit,edDiscount,edTotal;
+public class AddContractActivity extends AppCompatActivity implements View.OnClickListener, ContractDetailAdapter.ItemListener {
+    public static final String CONTRACT_DETAIL = "ContractDetail";
+    private EditText edIdHD, edPaymentStatus, edPickClient, edDateCreate, edDop, edDeposit, edDiscount, edTotal;
     private TextView tvCreateDetailContract;
     private ImageView imgBack;
     private RecyclerView rcv;
     private SwipeRefreshLayout swipeRefreshLayout;
     private Button btnAdd;
-    private List<ContractDetail>contractDetailList=new ArrayList<>();
+    private List<ContractDetail> contractDetailList = new ArrayList<>();
     private ContractDetailAdapter adapter;
+
     SimpleDateFormat sdf = new SimpleDateFormat( "yyyy-MM-dd");
     SimpleDateFormat sdf2= new SimpleDateFormat("dd/MM/yyyy");
     FormatUtils formatUtils=new FormatUtils();
@@ -67,32 +74,33 @@ public class AddContractActivity extends AppCompatActivity implements View.OnCli
     private float totalPrice;
 
 
-
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_contract);
 
-        imgBack=findViewById(R.id.imgBackFromAddContract);
+        imgBack = findViewById(R.id.imgBackFromAddContract);
 
-        edIdHD=findViewById(R.id.edAddIdContract);
-        edPaymentStatus=findViewById(R.id.edPaymentStatus);
-        edPickClient=findViewById(R.id.edAddClientContract);
-        tvCreateDetailContract=findViewById(R.id.tvCreateDetailContract);
-        edDateCreate=findViewById(R.id.edAddDateCreateContract);
-        edDop=findViewById(R.id.edAddDOPContract);
-        edDeposit=findViewById(R.id.edAddDepositContract);
-        edDiscount=findViewById(R.id.edAddDiscountContract);
-        edTotal=findViewById(R.id.edAddTotalAmmountContract);
-        rcv=findViewById(R.id.rcvDetailContractInAddContract);
-        swipeRefreshLayout=findViewById(R.id.srlAddContract);
-        btnAdd=findViewById(R.id.btnAddNewContract);
+        edIdHD = findViewById(R.id.edAddIdContract);
+        edPaymentStatus = findViewById(R.id.edPaymentStatus);
+        edPickClient = findViewById(R.id.edAddClientContract);
+        tvCreateDetailContract = findViewById(R.id.tvCreateDetailContract);
+        edDateCreate = findViewById(R.id.edAddDateCreateContract);
+        edDop = findViewById(R.id.edAddDOPContract);
+        edDeposit = findViewById(R.id.edAddDepositContract);
+        edDiscount = findViewById(R.id.edAddDiscountContract);
+        edTotal = findViewById(R.id.edAddTotalAmmountContract);
+        rcv = findViewById(R.id.rcvDetailContractInAddContract);
+        swipeRefreshLayout = findViewById(R.id.srlAddContract);
+        btnAdd = findViewById(R.id.btnAddNewContract);
 
-        LinearLayoutManager linearLayoutManager=new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false);
+        // Khởi tạo adapter và rcv
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         rcv.setLayoutManager(linearLayoutManager);
-        adapter=new ContractDetailAdapter();
+        adapter = new ContractDetailAdapter(this);
         rcv.setAdapter(adapter);
+        rcv.setNestedScrollingEnabled(false);
 
 
         imgBack.setOnClickListener(this);
@@ -117,12 +125,11 @@ public class AddContractActivity extends AppCompatActivity implements View.OnCli
         formatCurrencyForEditText();
 
 
-
     }
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.imgBackFromAddContract:
                 deleteContractDetail();
                 finish();
@@ -138,7 +145,7 @@ public class AddContractActivity extends AppCompatActivity implements View.OnCli
                 }
                 break;
             case R.id.edAddClientContract:
-                pickCustomerActivityResultLauncher.launch(new Intent(this,PickClientActivity.class));
+                pickCustomerActivityResultLauncher.launch(new Intent(this, PickClientActivity.class));
                 break;
             case R.id.tvCreateDetailContract:
                 Intent intent=new Intent(AddContractActivity.this,AddContractDetailActivity.class);
@@ -147,7 +154,7 @@ public class AddContractActivity extends AppCompatActivity implements View.OnCli
                 startActivity(intent);
                 break;
             case R.id.btnAddNewContract:
-                if(validateForm()>0){
+                if (validateForm() > 0) {
                     try {
                         saveContract();
                         finish();
@@ -161,19 +168,18 @@ public class AddContractActivity extends AppCompatActivity implements View.OnCli
 
     //  Lưu thông tin hợp đồng
     private void saveContract() throws ParseException {
-        String idHD=edIdHD.getText().toString();
-
+        String idHD = edIdHD.getText().toString();
+      
         // format ngày thanh toán có kiểu dd/MM/yyyy thành yyyy-MM-dd
         String formatNgayThanhToan=edDop.getText().toString().isEmpty() ? null: sdf.format(sdf2.parse(edDop.getText().toString().trim()));
 
+        Float tienCoc = edDeposit.getText().toString().trim().isEmpty() ? null : Float.parseFloat(edDeposit.getText().toString().trim());
+        Float giamGia = edDiscount.getText().toString().trim().isEmpty() ? null : Float.parseFloat(edDiscount.getText().toString().trim());
+        Float tongTien = Float.valueOf(edTotal.getText().toString());
+        String trangThaiThanhToan = edPaymentStatus.getText().toString();
+        String trangThaiHopDong = "Đang thực hiện";
 
-        Float tienCoc=edDeposit.getText().toString().trim().isEmpty() ? null: Float.parseFloat(edDeposit.getText().toString().trim());
-        Float giamGia=edDiscount.getText().toString().trim().isEmpty() ? null: Float.parseFloat(edDiscount.getText().toString().trim());
-        Float tongTien= Float.valueOf(edTotal.getText().toString());
-        String trangThaiThanhToan=edPaymentStatus.getText().toString();
-        String trangThaiHopDong="Đang thực hiện";
-
-        Contract contract=new Contract(idHD,formatNgayThanhToan,tienCoc,giamGia,tongTien,trangThaiThanhToan,trangThaiHopDong,idKH);
+        Contract contract = new Contract(idHD, formatNgayThanhToan, tienCoc, giamGia, tongTien, trangThaiThanhToan, trangThaiHopDong, idKH);
         insertNewContract(contract);
     }
 
@@ -261,7 +267,7 @@ public class AddContractActivity extends AppCompatActivity implements View.OnCli
     }
 
     //    Cập nhật lại giá trị tổng tiền khi thay đổi giá trị giảm giá
-    private void onChangeDiscount(){
+    private void onChangeDiscount() {
         edDiscount.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -279,7 +285,7 @@ public class AddContractActivity extends AppCompatActivity implements View.OnCli
     }
 
     //    Tổng tiền = tổng tiền sản phẩm + dịch vụ - giảm giá
-    private void totalAmount(){
+    private void totalAmount() {
 
         float discount = 0;
 
@@ -288,7 +294,7 @@ public class AddContractActivity extends AppCompatActivity implements View.OnCli
             discount = Float.parseFloat(discountText);
         }
 
-        float totalAmount=totalPrice-discount;
+        float totalAmount = totalPrice - discount;
 
         edTotal.setText(String.valueOf(totalAmount));
     }
@@ -296,20 +302,19 @@ public class AddContractActivity extends AppCompatActivity implements View.OnCli
     //    Tính tổng tiền sản phẩm, dịch vụ
     private float totalPrice(List<ContractDetail> details) {
         float total = 0;
-         for (ContractDetail contractDetail : details) {
-                total += contractDetail.getProductPrice()+contractDetail.getServicePrice() ;
+        for (ContractDetail contractDetail : details) {
+            total += contractDetail.getProductPrice() + contractDetail.getServicePrice();
 
-            }
+        }
         return total;
     }
 
-    private int validateForm(){
-        int check=1;
-        String customerName=edPickClient.getText().toString();
-        String deposit=edDeposit.getText().toString();
-        String discount=edDiscount.getText().toString();
-        String status=edPaymentStatus.getText().toString();
-
+    private int validateForm() {
+        int check = 1;
+        String customerName = edPickClient.getText().toString();
+        String deposit = edDeposit.getText().toString();
+        String discount = edDiscount.getText().toString();
+        String status = edPaymentStatus.getText().toString();
 
 
         if(customerName.equalsIgnoreCase("Chọn KH")){
@@ -331,9 +336,9 @@ public class AddContractActivity extends AppCompatActivity implements View.OnCli
 
 
 
-
         return check;
     }
+
 
     // Hàm gọi API thêm  hợp đồng mới
     private void insertNewContract(Contract contract){
@@ -346,43 +351,37 @@ public class AddContractActivity extends AppCompatActivity implements View.OnCli
                 if(response.isSuccessful()){
                     updateIdContractForContractDetail();
                     Toast.makeText(AddContractActivity.this,"Thêm hợp đồng thành công",Toast.LENGTH_SHORT).show();
-
-                }else{
-                    Toast.makeText(AddContractActivity.this,"Lỗi",Toast.LENGTH_SHORT).show();
-
+                } else {
+                    Toast.makeText(AddContractActivity.this, "Lỗi", Toast.LENGTH_SHORT).show();
                 }
             }
-
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
-                Log.i("Tag","Lỗi"+t.getMessage());
-
+                Log.i("Tag", "Lỗi" + t.getMessage());
             }
         });
 
     }
+
 
     //  Hàm gọi API Lấy toàn danh sách HDCT có idHDTamThoi=idHD
     private void getAllDetailContractByIdHDTT(){
         String idHDTT=edIdHD.getText().toString();
         ApiService apiService= ApiClient.getClient().create(ApiService.class);
         Call<List<ContractDetail>> call=apiService.getAllDetailContractByIdHDTT(idHDTT);
-
         call.enqueue(new Callback<List<ContractDetail>>() {
             @Override
             public void onResponse(Call<List<ContractDetail>> call, Response<List<ContractDetail>> response) {
-                if(response.isSuccessful()){
+                if (response.isSuccessful()) {
                     contractDetailList.clear();
                     contractDetailList.addAll(response.body());
                     adapter.setContractDetails(contractDetailList);
                     totalPrice = totalPrice(contractDetailList);
                     totalAmount();
-
-
                     swipeRefreshLayout.setRefreshing(false);
 
-                }else{
-                    Log.i("Tag","Lỗi");
+                } else {
+                    Log.i("Tag", "Lỗi");
                     swipeRefreshLayout.setRefreshing(false);
                 }
 
@@ -390,13 +389,14 @@ public class AddContractActivity extends AppCompatActivity implements View.OnCli
 
             @Override
             public void onFailure(Call<List<ContractDetail>> call, Throwable t) {
-                Log.i("Tag","Lỗi"+t.getMessage());
+                Log.i("Tag", "Lỗi" + t.getMessage());
                 swipeRefreshLayout.setRefreshing(false);
 
 
             }
         });
     }
+
 
     // Hàm gọi API cập nhật idHD cho HDCT
     private void updateIdContractForContractDetail(){
@@ -454,10 +454,10 @@ public class AddContractActivity extends AppCompatActivity implements View.OnCli
                         Customer selectedCustomer = data.getParcelableExtra("customer");
 
                         if (selectedCustomer != null) {
-                            edPickClient.setText(selectedCustomer.getName()+" - "+selectedCustomer.getPhone());
-                            idKH=selectedCustomer.getId();
-                        }else{
-                            Toast.makeText(AddContractActivity.this,"Lỗi",Toast.LENGTH_SHORT).show();
+                            edPickClient.setText(selectedCustomer.getName() + " - " + selectedCustomer.getPhone());
+                            idKH = selectedCustomer.getId();
+                        } else {
+                            Toast.makeText(AddContractActivity.this, "Lỗi", Toast.LENGTH_SHORT).show();
 
                         }
                     }
@@ -478,5 +478,53 @@ public class AddContractActivity extends AppCompatActivity implements View.OnCli
     protected void onResume() {
         super.onResume();
         getAllDetailContractByIdHDTT();
+    }
+
+    @Override
+    public void startUpdateContractDetailActivity(ContractDetail contractDetail) {
+        if (contractDetail.getLocation() != null) {
+            // HĐCT với dịch
+            Intent intent = new Intent(this, UpdateContractServiceActivity.class);
+            intent.putExtra(CONTRACT_DETAIL, contractDetail);
+            startActivity(intent);
+        } else {
+            // HĐCT với sản phẩm
+            Intent intent = new Intent(this, UpdateContractProductActivity.class);
+            intent.putExtra(CONTRACT_DETAIL, contractDetail);
+            startActivity(intent);
+        }
+    }
+
+    // Hiển thị hộp thoại xác nhận trước khi xoá HĐCT
+    @Override
+    public void showConfirmDeleteContractDetail(ContractDetail contractDetail) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Xác nhận xoá HĐCT: " + contractDetail.getId());
+        builder.setNegativeButton("Huỷ", (dialogInterface, i) -> dialogInterface.dismiss());
+        builder.setPositiveButton("Xoá", (dialogInterface, i) -> {
+            // Thực hiện xoá HĐCT theo mã HĐCT
+            ApiService apiService = ApiClient.getClient().create(ApiService.class);
+            Call<ServerResponse> call = apiService.deleteContractDetailByContractDetailID(contractDetail.getId());
+            call.enqueue(new Callback<ServerResponse>() {
+                @Override
+                public void onResponse(Call<ServerResponse> call, Response<ServerResponse> response) {
+                    if (response.isSuccessful()) {
+                        ServerResponse serverResponse = response.body();
+                        if (serverResponse.isSuccess()) {
+                            Toast.makeText(AddContractActivity.this, "Xoá HĐCT thành công", Toast.LENGTH_SHORT).show();
+                            getAllDetailContractByIdHDTT();
+                        } else {
+                            Toast.makeText(AddContractActivity.this, "Xoá HĐCT có lỗi", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ServerResponse> call, Throwable t) {
+
+                }
+            });
+        });
+        builder.show();
     }
 }
