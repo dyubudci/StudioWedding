@@ -140,7 +140,11 @@ public class AddContractActivity extends AppCompatActivity implements View.OnCli
                 break;
             case R.id.tvCreateDetailContract:
                 Intent intent=new Intent(AddContractActivity.this,AddContractDetailActivity.class);
-                intent.putExtra("contractID",edIdHD.getText().toString().trim());
+                String idHD=edIdHD.getText().toString().trim();
+                intent.putExtra("contractID",idHD);
+                Toast.makeText(AddContractActivity.this,"idHD"+idHD,Toast.LENGTH_SHORT).show();
+                Log.i("IDHDTT",idHD);
+
                 startActivity(intent);
                 break;
             case R.id.btnAddNewContract:
@@ -161,6 +165,8 @@ public class AddContractActivity extends AppCompatActivity implements View.OnCli
 
         String formatNgayThanhToan=edDop.getText().toString().isEmpty() ? null: sdf.format(sdf2.parse(edDop.getText().toString().trim()));
         Date ngayThanhToan = formatNgayThanhToan == null ? null : sdf.parse(formatNgayThanhToan);
+        Log.i("tag",""+formatNgayThanhToan);
+        Log.i("TAG2",""+ngayThanhToan);
 
 
         Float tienCoc=edDeposit.getText().toString().trim().isEmpty() ? null: Float.parseFloat(edDeposit.getText().toString().trim());
@@ -169,7 +175,7 @@ public class AddContractActivity extends AppCompatActivity implements View.OnCli
         String trangThaiThanhToan=edPaymentStatus.getText().toString();
         String trangThaiHopDong="Đang thực hiện";
 
-        Contract contract=new Contract(idHD,ngayThanhToan,tienCoc,giamGia,tongTien,trangThaiThanhToan,trangThaiHopDong,idKH);
+        Contract contract=new Contract(idHD,formatNgayThanhToan,tienCoc,giamGia,tongTien,trangThaiThanhToan,trangThaiHopDong,idKH);
         insertNewContract(contract);
     }
 
@@ -330,6 +336,7 @@ public class AddContractActivity extends AppCompatActivity implements View.OnCli
 
     // Lấy toàn danh sách HDCT có idHDTamThoi=idHD
     private void getAllDetailContractByIdHDTT(){
+        String idHDTT=edIdHD.getText().toString();
         ApiService apiService= ApiClient.getClient().create(ApiService.class);
         Call<List<ContractDetail>> call=apiService.getAllDetailContractByIdHDTT(idHDTT);
 

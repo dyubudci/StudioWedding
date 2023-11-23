@@ -14,7 +14,7 @@ public class Contract implements Serializable {
     private Date ngayTao;
     @SerializedName("ngayThanhToan")
 
-    private Date ngayThanhToan;
+    private String ngayThanhToan;
     @SerializedName("tienCoc")
 
     private Float tienCoc;
@@ -45,7 +45,7 @@ public class Contract implements Serializable {
 
     private int idKH;
 
-    @SerializedName("hoTen")
+    @SerializedName("tenKhachHang")
     private String tenKH;
     @SerializedName("dienThoai")
 
@@ -56,7 +56,7 @@ public class Contract implements Serializable {
     private Customer customer;
 
 
-    public Contract(String idHopDong, Date ngayTao, Date ngayThanhToan, Float tienCoc, Float giamGia, Float tongTien, String trangThaiThanhToan, String trangThaiHopDong, String trangThaiPhatSinh, int hienThi,String idHDTT, int idKH, String tenKH, String dienThoai, String diaChi) {
+    public Contract(String idHopDong, Date ngayTao, String ngayThanhToan, Float tienCoc, Float giamGia, Float tongTien, String trangThaiThanhToan, String trangThaiHopDong, String trangThaiPhatSinh, int hienThi,String idHDTT, int idKH, String tenKH, String dienThoai, String diaChi) {
         this.idHopDong = idHopDong;
         this.ngayTao = ngayTao;
         this.ngayThanhToan = ngayThanhToan;
@@ -74,8 +74,16 @@ public class Contract implements Serializable {
         this.diaChi = diaChi;
     }
 
+    public Contract(String idHopDong, Date ngayTao, Float tongTien, String trangThaiThanhToan, String trangThaiHopDong, String tenKH) {
+        this.idHopDong = idHopDong;
+        this.ngayTao = ngayTao;
+        this.tongTien = tongTien;
+        this.trangThaiThanhToan = trangThaiThanhToan;
+        this.trangThaiHopDong = trangThaiHopDong;
+        this.tenKH = tenKH;
+    }
 
-    public Contract(String idHopDong, Date ngayThanhToan, Float tienCoc, Float giamGia, Float tongTien, String trangThaiThanhToan, String trangThaiHopDong, int idKH) {
+    public Contract(String idHopDong, String ngayThanhToan, Float tienCoc, Float giamGia, Float tongTien, String trangThaiThanhToan, String trangThaiHopDong, int idKH) {
         this.idHopDong = idHopDong;
         this.ngayThanhToan = ngayThanhToan;
         this.tienCoc = tienCoc;
@@ -102,11 +110,11 @@ public class Contract implements Serializable {
         this.ngayTao = ngayTao;
     }
 
-    public Date getNgayThanhToan() {
+    public String getNgayThanhToan() {
         return ngayThanhToan;
     }
 
-    public void setNgayThanhToan(Date ngayThanhToan) {
+    public void setNgayThanhToan(String ngayThanhToan) {
         this.ngayThanhToan = ngayThanhToan;
     }
 

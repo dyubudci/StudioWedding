@@ -200,10 +200,10 @@ public class AddContractDetailActivity extends AppCompatActivity {
 
     public void performAddContractDetail() {
         if (productButton.isChecked()) {
-//            String contractIDTemporary = getIntent().getStringExtra("contractID");
-//            if (contractIDTemporary.isEmpty()) {
-//                return;
-//            }
+            String contractIDTemporary = getIntent().getStringExtra("contractID");
+            if (contractIDTemporary.isEmpty()) {
+                return;
+            }
             String contractDetailID = contractIdEditText.getText().toString().trim();
             String dateOfHire = dateOfHireEditText.getText().toString().trim();
             String dateOfReturn = dateOfReturnEditText.getText().toString().trim();
@@ -220,7 +220,7 @@ public class AddContractDetailActivity extends AppCompatActivity {
                         dateOfHire,
                         dateOfReturn,
                         productSeleted.getId(),
-                        "Tạm thời"
+                        contractIDTemporary
                 );
                 call.enqueue(new Callback<ServerResponse>() {
                     @Override
@@ -251,10 +251,10 @@ public class AddContractDetailActivity extends AppCompatActivity {
                 });
             }
         } else {
-//            String contractIDTemporary = getIntent().getStringExtra("contractID");
-//            if (contractIDTemporary.isEmpty()) {
-//                return;
-//            }
+            String contractIDTemporary = getIntent().getStringExtra("contractID");
+            if (contractIDTemporary.isEmpty()) {
+                return;
+            }
             String contractDetailID = contractIdEditText.getText().toString().trim();
             String location = locationEditText.getText().toString().trim();
             String dateOfPerform = dateOfPerformEditText.getText().toString().trim();
@@ -270,7 +270,7 @@ public class AddContractDetailActivity extends AppCompatActivity {
                         location,
                         dateOfPerform,
                         serviceSeleted.getId(),
-                        "Tạm thời"
+                        contractIDTemporary
                 );
                 call.enqueue(new Callback<ServerResponse>() {
                     @Override
