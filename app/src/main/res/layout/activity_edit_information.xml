@@ -79,7 +79,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <EditText
-            android:id="@+id/editTextText3"
+            android:id="@+id/edMaNv"
             android:layout_width="320dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
@@ -108,7 +108,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <EditText
-            android:id="@+id/editTextText4"
+            android:id="@+id/edHoten"
             android:layout_width="320dp"
             android:layout_height="wrap_content"
             android:drawablePadding="10dp"
@@ -138,6 +138,7 @@
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout3">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cstNgay"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:layout_marginRight="5dp"
@@ -145,7 +146,7 @@
             android:background="@drawable/edittext_bgr">
 
             <TextView
-                android:id="@+id/textView16"
+                android:id="@+id/tvNgaySing"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
@@ -211,7 +212,7 @@
         app:layout_constraintTop_toBottomOf="@+id/linearLayout">
 
         <EditText
-            android:id="@+id/editTextText10"
+            android:id="@+id/edSdt"
             android:layout_width="320dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
@@ -240,10 +241,9 @@
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout4">
 
         <EditText
-            android:id="@+id/editTextText11"
+            android:id="@+id/edDiachi"
             android:layout_width="320dp"
             android:layout_height="wrap_content"
-
             android:layout_marginStart="10dp"
             android:background="@color/line"
             android:drawableStart="@drawable/locaion"
@@ -269,25 +269,37 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout10">
 
+
         <TextView
-            android:id="@+id/editTextText12"
-            android:layout_width="320dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:background="@color/line"
+            android:id="@+id/textView14"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:drawableStart="@drawable/spinner_select"
-            android:ems="10"
-            android:hint="Vai trò"
-            android:inputType="text"
-            android:drawablePadding="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/spVaitro"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <Spinner
+            android:id="@+id/spVaitro"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="12dp"
+            android:layout_weight="1"
+            android:drawableStart="@drawable/locaion"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="MissingConstraints" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/btnLuu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"

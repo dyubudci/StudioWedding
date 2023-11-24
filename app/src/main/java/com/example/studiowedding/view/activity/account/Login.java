@@ -1,6 +1,8 @@
 package com.example.studiowedding.view.activity.account;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -14,6 +16,9 @@ import com.example.studiowedding.model.Account;
 import com.example.studiowedding.network.AccountResponse;
 import com.example.studiowedding.network.ApiClient;
 import com.example.studiowedding.network.ApiService;
+import com.example.studiowedding.view.activity.MainActivity;
+import com.example.studiowedding.view.activity.contract.FilterContractActivity;
+import com.example.studiowedding.view.activity.task.SeeTaskActivity;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -24,6 +29,7 @@ public class Login extends AppCompatActivity {
     private ApiService apiService;
     private EditText edtIdNhanVien, edtMatKhau;
     private Button btnLogin;
+    private boolean isPasswordVisible = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +54,15 @@ public class Login extends AppCompatActivity {
                 login(idNhanVien, matKhau);
             }
         });
+        Button btnTogglePassword = findViewById(R.id.btnTogglePassword);
+
+        btnTogglePassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                isPasswordVisible = !isPasswordVisible;
+                togglePasswordVisibility(edtMatKhau, isPasswordVisible);
+            }
+        });
     }
 
     private void login(String idNhanVien, String matKhau) {
@@ -64,9 +79,13 @@ public class Login extends AppCompatActivity {
                             String vaitro = userAccount.getVaitro();
                             if(vaitro.equals("1")){
                                 Toast.makeText(Login.this, "Đăng nhập thành công admin " , Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(Login.this, MainActivity.class);
+                                startActivity(intent);
                             }
                             else{
                                 Toast.makeText(Login.this, "Đăng nhập thành công nhân viên " , Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(Login.this, SeeTaskActivity.class);
+                                startActivity(intent);
                             }
                         } else {
                             Toast.makeText(Login.this, "Không có thông tin tài khoản", Toast.LENGTH_SHORT).show();
@@ -75,7 +94,7 @@ public class Login extends AppCompatActivity {
                         Toast.makeText(Login.this, "Đăng nhập không thành công", Toast.LENGTH_SHORT).show();
                     }
                 } else {
-                    Toast.makeText(Login.this, "Đăng nhập không thành công", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Login.this, "Tên đăng nhập hoặc mật khẩu sai", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -85,5 +104,17 @@ public class Login extends AppCompatActivity {
                 Toast.makeText(Login.this, "Đăng nhập không thành công: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+    private void togglePasswordVisibility(EditText editText, boolean isVisible) {
+        if (isVisible) {
+            // Hiển thị mật khẩu
+            editText.setInputType(editText.getInputType() | 1);
+        } else {
+            // Ẩn mật khẩu
+            editText.setInputType(editText.getInputType() & ~1);
+        }
+
+        // Đặt con trỏ về cuối chuỗi
+        editText.setSelection(editText.getText().length());
     }
 }
