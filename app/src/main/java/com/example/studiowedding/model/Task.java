@@ -1,23 +1,27 @@
 package com.example.studiowedding.model;
 
+import com.google.gson.annotations.SerializedName;
+
+import java.util.Date;
 import java.util.List;
 
 public class Task {
+    @SerializedName("idHopDong")
     private String id;
-    private String date;
+    @SerializedName("ngayThucHien")
+    private Date dateImplement;
+    @SerializedName("trangThaiCongViec")
     private String statusTask;
-    private String name;
+    @SerializedName("tenDichVu")
+    private String nameService;
+    @SerializedName("diaDiem")
     private String address;
-    private List<String> employee;
-
-    public Task(String id, String date, String statusTask, String name, String address, List<String> employee) {
-        this.id = id;
-        this.date = date;
-        this.statusTask = statusTask;
-        this.name = name;
-        this.address = address;
-        this.employee = employee;
-    }
+    @SerializedName("ngayGiatSanPham")
+    private Date dataLaundry;
+    @SerializedName("ngaySanSang")
+    private Date dataReady;
+    @SerializedName("hoVaTen")
+    private String employee;
 
     public String getId() {
         return id;
@@ -27,12 +31,12 @@ public class Task {
         this.id = id;
     }
 
-    public String getDate() {
-        return date;
+    public Date getDateImplement() {
+        return dateImplement;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setDateImplement(Date dateImplement) {
+        this.dateImplement = dateImplement;
     }
 
     public String getStatusTask() {
@@ -43,12 +47,12 @@ public class Task {
         this.statusTask = statusTask;
     }
 
-    public String getName() {
-        return name;
+    public String getNameService() {
+        return nameService;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setNameService(String nameService) {
+        this.nameService = nameService;
     }
 
     public String getAddress() {
@@ -59,11 +63,27 @@ public class Task {
         this.address = address;
     }
 
-    public List<String> getEmployee() {
+    public Date getDataLaundry() {
+        return dataLaundry;
+    }
+
+    public void setDataLaundry(Date dataLaundry) {
+        this.dataLaundry = dataLaundry;
+    }
+
+    public Date getDataReady() {
+        return dataReady;
+    }
+
+    public void setDataReady(Date dataReady) {
+        this.dataReady = dataReady;
+    }
+
+    public String getEmployee() {
         return employee;
     }
 
-    public void setEmployee(List<String> employee) {
+    public void setEmployee(String employee) {
         this.employee = employee;
     }
 }
