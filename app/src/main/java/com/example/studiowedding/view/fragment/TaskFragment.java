@@ -19,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.widget.ImageView;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.example.studiowedding.R;
@@ -42,7 +43,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class TaskFragment extends Fragment implements OnItemClickListner.TaskI {
-
+    private SearchView searchView;
     private RecyclerView mRCV;
     private ImageView ivFilter;
     private ProgressDialog mProgressDialog;
@@ -63,10 +64,15 @@ public class TaskFragment extends Fragment implements OnItemClickListner.TaskI {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mRCV = view.findViewById(R.id.rcv_task);
-        ivFilter = view.findViewById(R.id.iv_filter_task);
+        initUI(view);
         onClick();
         readTasksApi();
+    }
+
+    private void initUI(View view) {
+        mRCV = view.findViewById(R.id.rcv_task);
+        ivFilter = view.findViewById(R.id.iv_filter_task);
+        searchView = view.findViewById(R.id.et_search_task);
     }
 
     private void onClick() {
@@ -88,6 +94,19 @@ public class TaskFragment extends Fragment implements OnItemClickListner.TaskI {
             );
 
             datePickerDialog.show();
+        });
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                adapterTask.getFilter().filter(s);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                adapterTask.getFilter().filter(s);
+                return true;
+            }
         });
     }
 
