@@ -72,7 +72,6 @@
             android:exported="false"
           />
 
-
         <activity
             android:name=".view.activity.contract.PickClientActivity"
             android:exported="false" />
