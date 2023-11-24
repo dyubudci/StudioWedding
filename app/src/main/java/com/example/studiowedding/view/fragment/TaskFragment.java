@@ -2,6 +2,7 @@ package com.example.studiowedding.view.fragment;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -30,6 +31,7 @@ import com.example.studiowedding.network.ApiService;
 import com.example.studiowedding.utils.UIutils;
 import com.example.studiowedding.view.activity.task.ResponseTask;
 import com.example.studiowedding.view.activity.task.UpdateTaskActivity;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -43,6 +45,9 @@ public class TaskFragment extends Fragment implements OnItemClickListner.TaskI {
 
     private RecyclerView mRCV;
     private ImageView ivFilter;
+    private ProgressDialog mProgressDialog;
+    private List<Task> mList;
+    private TaskAdapter adapterTask;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,14 +92,15 @@ public class TaskFragment extends Fragment implements OnItemClickListner.TaskI {
     }
 
     private void setAdapter(List<Task> taskList) {
-        TaskAdapter adapterTask = new TaskAdapter(taskList);
+        adapterTask = new TaskAdapter(taskList);
         adapterTask.setOnClickItem(this);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         mRCV.setLayoutManager(layoutManager);
         mRCV.setAdapter(adapterTask);
+        mList = taskList;
     }
 
-    private void readTasksApi() {
+    public void readTasksApi() {
         ApiClient.getClient().create(ApiService.class).readTask().enqueue(new Callback<ResponseTask>() {
             @Override
             public void onResponse(@NonNull Call<ResponseTask> call, @NonNull Response<ResponseTask> response) {
@@ -114,23 +120,58 @@ public class TaskFragment extends Fragment implements OnItemClickListner.TaskI {
             }
         });
     }
+    public void deleteTaskApi(Task task, View view){
+        ApiClient.getClient().create(ApiService.class).deleteTaskById(task.getIdTask()).enqueue(new Callback<ResponseTask>() {
+            @Override
+            public void onResponse(@NonNull Call<ResponseTask> call, @NonNull Response<ResponseTask> response) {
+                mProgressDialog.dismiss();
+                if (response.isSuccessful()){
+                    assert response.body() != null;
+                    if (AppConstants.STATUS_TASK.equals(response.body().getStatus())){
+                        mList.remove(task);
+                        adapterTask.setList(mList);
+                        Snackbar.make(view,"Xóa thành công", Snackbar.LENGTH_SHORT).show();
+                    }else {
+                        Snackbar.make(view,"Xóa thất bại", Snackbar.LENGTH_SHORT).show();
+                    }
+                }else {
+                    Snackbar.make(view,"Xóa thất bại", Snackbar.LENGTH_SHORT).show();
+                }
+            }
 
-    @Override
-    public void nextUpdateScreenTask(Task task) {
-        startActivity(new Intent(getActivity(), UpdateTaskActivity.class));
+            @Override
+            public void onFailure(@NonNull Call<ResponseTask> call, @NonNull Throwable t) {
+
+            }
+        });
     }
 
     @Override
-    public void showConfirmDelete() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+    public void nextUpdateScreenTask(Task task) {
+        Intent intent = new Intent(getActivity(), UpdateTaskActivity.class);
+        intent.putExtra("task", task);
+        startActivity(intent);
+    }
 
+    @Override
+    public void showConfirmDelete(Task task, View view) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setTitle("Xóa công việc")
                 .setMessage("Bạn chắc chắn muốn xóa công việc này ?")
-                .setPositiveButton("Đồng ý", (dialog, which) -> dialog.dismiss())
+                .setPositiveButton("Đồng ý", (dialog, which) -> {
+                    mProgressDialog = ProgressDialog.show(getContext(), "", "Loading...");
+                    deleteTaskApi(task, view);
+                })
                 .setNegativeButton("Hủy", (dialog, which) -> dialog.dismiss());
 
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
 
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        readTasksApi();
     }
 }

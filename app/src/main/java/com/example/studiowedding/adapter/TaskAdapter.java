@@ -24,7 +24,7 @@ import java.util.List;
 
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
 
-    private final List<Task> mList;
+    private List<Task> mList;
     private OnItemClickListner.TaskI mOnClickItem;
     public TaskAdapter(List<Task> mList) {
         this.mList = mList;
@@ -34,6 +34,11 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
         this.mOnClickItem = mOnClickItem;
     }
 
+    @SuppressLint("NotifyDataSetChanged")
+    public void setList(List<Task> mList){
+        this.mList = mList;
+        notifyDataSetChanged();
+    }
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -64,7 +69,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
                     mOnClickItem.nextUpdateScreenTask(task);
                     return true;
                 case R.id.action_delete:
-                    mOnClickItem.showConfirmDelete();
+                    mOnClickItem.showConfirmDelete(task, holder.view);
                     return true;
                 default:
                     return false;
@@ -82,6 +87,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private final TextView tvId, tvDate, tvStatus, tvName, tvAddress, tvEmployee;
         private final ImageView ivBtn;
+        private final View view;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             tvId = itemView.findViewById(R.id.tv_id_hd_job);
@@ -91,11 +97,12 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
             tvAddress = itemView.findViewById(R.id.tv_address_job);
             tvEmployee = itemView.findViewById(R.id.tv_employee_job);
             ivBtn = itemView.findViewById(R.id.iv_menu_job);
+            view = itemView.findViewById(R.id.layout_task);
         }
 
         @SuppressLint("SetTextI18n")
         public void bind(Task task){
-            tvId.setText(task.getId());
+            tvId.setText(task.getIdContract());
             if (task.getDateImplement() == null){
                 tvDate.setText(FormatUtils.formatDateToString(task.getDataLaundry()));
                 tvName.setText(AppConstants.NAME_TASK);

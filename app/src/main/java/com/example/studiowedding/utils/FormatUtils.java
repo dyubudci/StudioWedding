@@ -28,4 +28,10 @@ public class FormatUtils {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
         return sdf.parse(dateString);
     }
+    /**
+     * Kiểm tra xem ngày truyền vào có trùng với ngày hiện tại không
+     */
+    public static boolean checkData(Date date){
+        return FormatUtils.formatDateToString(date).equals(FormatUtils.formatDateToString(new Date()));
+    }
 }
