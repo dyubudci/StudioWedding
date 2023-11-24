@@ -19,14 +19,13 @@ import com.example.studiowedding.interfaces.OnItemClickListner;
 import com.example.studiowedding.model.Task;
 import com.example.studiowedding.utils.FormatUtils;
 
-import java.util.Date;
 import java.util.List;
 
-public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
+public class TaskTodayAdapter extends RecyclerView.Adapter<TaskTodayAdapter.ViewHolder> {
 
     private final List<Task> mList;
     private OnItemClickListner.TaskI mOnClickItem;
-    public TaskAdapter(List<Task> mList) {
+    public TaskTodayAdapter(List<Task> mList) {
         this.mList = mList;
     }
 
