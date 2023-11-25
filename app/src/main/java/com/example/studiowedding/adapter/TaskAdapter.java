@@ -29,7 +29,7 @@ import java.util.Locale;
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> implements Filterable {
 
     private List<Task> mList;
-    private final List<Task> filteredTasks;
+    private List<Task> filteredTasks;
     private OnItemClickListner.TaskI mOnClickItem;
     public TaskAdapter(List<Task> mList) {
         this.mList = mList;
@@ -43,6 +43,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
     @SuppressLint("NotifyDataSetChanged")
     public void setList(List<Task> mList){
         this.mList = mList;
+        this.filteredTasks = mList;
         notifyDataSetChanged();
     }
     @NonNull

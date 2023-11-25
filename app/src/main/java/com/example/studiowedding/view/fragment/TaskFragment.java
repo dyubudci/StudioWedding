@@ -36,7 +36,9 @@ import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -45,7 +47,7 @@ import retrofit2.Response;
 public class TaskFragment extends Fragment implements OnItemClickListner.TaskI {
     private SearchView searchView;
     private RecyclerView mRCV;
-    private ImageView ivFilter;
+    private ImageView ivFilter, ivCancelFilter;
     private ProgressDialog mProgressDialog;
     private List<Task> mList;
     private TaskAdapter adapterTask;
@@ -73,6 +75,8 @@ public class TaskFragment extends Fragment implements OnItemClickListner.TaskI {
         mRCV = view.findViewById(R.id.rcv_task);
         ivFilter = view.findViewById(R.id.iv_filter_task);
         searchView = view.findViewById(R.id.et_search_task);
+        ivCancelFilter = view.findViewById(R.id.iv_cancel_filter_update_job);
+        ivCancelFilter.setVisibility(View.GONE);
     }
 
     private void onClick() {
@@ -86,7 +90,17 @@ public class TaskFragment extends Fragment implements OnItemClickListner.TaskI {
                     getContext(),
                     R.style.CustomDatePickerDialog,
                     (datePicker, selectedYear, selectedMonth, selectedDay) -> {
+                        ivCancelFilter.setVisibility(View.VISIBLE);
+                        ivFilter.setVisibility(View.GONE);
 
+                        // Tạo một Calendar object từ ngày được chọn
+                        Calendar selectedCalendar = Calendar.getInstance();
+                        selectedCalendar.set(selectedYear, selectedMonth, selectedDay);
+
+                        // Lọc danh sách theo ngày được chọn
+                        List<Task> list = mList;
+                        List<Task> filteredTasks = filterTasksByDate(list, selectedCalendar.getTime());
+                        adapterTask.setList(filteredTasks);
                     },
                     year,
                     month,
@@ -108,6 +122,12 @@ public class TaskFragment extends Fragment implements OnItemClickListner.TaskI {
                 return true;
             }
         });
+
+        ivCancelFilter.setOnClickListener(view -> {
+            ivCancelFilter.setVisibility(View.GONE);
+            ivFilter.setVisibility(View.VISIBLE);
+            adapterTask.setList(mList);
+        });
     }
 
     private void setAdapter(List<Task> taskList) {
@@ -117,6 +137,31 @@ public class TaskFragment extends Fragment implements OnItemClickListner.TaskI {
         mRCV.setLayoutManager(layoutManager);
         mRCV.setAdapter(adapterTask);
         mList = taskList;
+    }
+
+    // Hàm lọc danh sách theo ngày
+    private List<Task> filterTasksByDate(List<Task> taskList, Date selectedDate) {
+        return taskList.stream()
+                .filter(task -> {
+                    if (task.getDateImplement() != null && isSameDay(task.getDateImplement(), selectedDate)) {
+                        return true; // Lọc theo dateImplement nếu không null và là ngày được chọn
+                    } else if (task.getDataLaundry() != null && isSameDay(task.getDataLaundry(), selectedDate)) {
+                        return true; // Lọc theo dateLaundry nếu không null và là ngày được chọn
+                    }
+                    return false; // Không thỏa mãn bất kỳ điều kiện nào
+                })
+                .collect(Collectors.toList());
+    }
+
+    // Hàm kiểm tra xem hai ngày có phải là cùng một ngày hay không
+    private boolean isSameDay(Date date1, Date date2) {
+        Calendar cal1 = Calendar.getInstance();
+        cal1.setTime(date1);
+        Calendar cal2 = Calendar.getInstance();
+        cal2.setTime(date2);
+        return cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR) &&
+                cal1.get(Calendar.MONTH) == cal2.get(Calendar.MONTH) &&
+                cal1.get(Calendar.DAY_OF_MONTH) == cal2.get(Calendar.DAY_OF_MONTH);
     }
 
     public void readTasksApi() {
