@@ -2,7 +2,6 @@ package com.example.studiowedding.view.fragment;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -16,7 +15,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -27,11 +25,9 @@ import com.example.studiowedding.interfaces.OnItemClickListner;
 import com.example.studiowedding.model.Task;
 import com.example.studiowedding.network.ApiClient;
 import com.example.studiowedding.network.ApiService;
-import com.example.studiowedding.utils.UIutils;
 import com.example.studiowedding.view.activity.task.ResponseTask;
 import com.example.studiowedding.view.activity.task.UpdateTaskActivity;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
