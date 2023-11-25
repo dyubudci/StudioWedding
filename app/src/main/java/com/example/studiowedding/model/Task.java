@@ -2,12 +2,15 @@ package com.example.studiowedding.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-public class Task {
+public class Task implements Serializable {
+    @SerializedName("idCongViec")
+    private int idTask;
     @SerializedName("idHopDong")
-    private String id;
+    private String idContract;
     @SerializedName("ngayThucHien")
     private Date dateImplement;
     @SerializedName("trangThaiCongViec")
@@ -23,12 +26,21 @@ public class Task {
     @SerializedName("hoVaTen")
     private String employee;
 
-    public String getId() {
-        return id;
+
+    public int getIdTask() {
+        return idTask;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setIdTask(int idTask) {
+        this.idTask = idTask;
+    }
+
+    public String getIdContract() {
+        return idContract;
+    }
+
+    public void setIdContract(String idContract) {
+        this.idContract = idContract;
     }
 
     public Date getDateImplement() {
@@ -85,5 +97,20 @@ public class Task {
 
     public void setEmployee(String employee) {
         this.employee = employee;
+    }
+
+    @Override
+    public String toString() {
+        return "Task{" +
+                "idTask='" + idTask + '\'' +
+                ", idContract='" + idContract + '\'' +
+                ", dateImplement=" + dateImplement +
+                ", statusTask='" + statusTask + '\'' +
+                ", nameService='" + nameService + '\'' +
+                ", address='" + address + '\'' +
+                ", dataLaundry=" + dataLaundry +
+                ", dataReady=" + dataReady +
+                ", employee='" + employee + '\'' +
+                '}';
     }
 }
