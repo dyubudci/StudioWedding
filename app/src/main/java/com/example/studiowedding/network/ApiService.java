@@ -1,37 +1,24 @@
 package com.example.studiowedding.network;
-
-import com.example.studiowedding.model.Account;
-import com.example.studiowedding.network.ManagerUrl;
-
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.POST;
-
-
-import com.example.studiowedding.model.Contract;
-import com.example.studiowedding.model.ContractDetail;
-import com.example.studiowedding.model.Customer;
-import com.example.studiowedding.model.Incurrent;
-import com.example.studiowedding.view.activity.task.ResponseTask;
-
-import com.example.studiowedding.model.Product;
-import com.example.studiowedding.model.Service;
-import com.example.studiowedding.view.activity.detail_contract.ServerResponse;
-
-import java.net.IDN;
-import java.util.List;
-
-import okhttp3.ResponseBody;
-import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
-import retrofit2.http.Field;
-import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
-import retrofit2.http.POST;
+import retrofit2.http.Query;
+import java.util.List;
+import com.example.studiowedding.model.Contract;
+import com.example.studiowedding.model.ContractDetail;
+import com.example.studiowedding.model.Customer;
+import com.example.studiowedding.model.Incurrent;
+import com.example.studiowedding.view.activity.account.AccountResponse;
+import com.example.studiowedding.view.activity.task.ResponseTask;
+import com.example.studiowedding.model.Product;
+import com.example.studiowedding.model.Service;
+import com.example.studiowedding.view.activity.detail_contract.ServerResponse;
 
 
 public interface ApiService {
@@ -55,7 +42,7 @@ public interface ApiService {
   // Account
     @FormUrlEncoded
     @POST(ManagerUrl.ACCOUNT)
-    Call<AccountResponse> loginAccount(@Field("idNhanVien") String idNhanVien, @Field("matKhau") String matKhau);    
+    Call<AccountResponse> loginAccount(@Field("idNhanVien") String idNhanVien, @Field("matKhau") String matKhau);
 
 
     // CONTRACT
