@@ -122,6 +122,10 @@ public interface ApiService {
 
     @GET(ManagerUrl.GET_PRODUCT)
     Call<List<Product>> getProducts();
+    @GET(ManagerUrl.GET_PRODUCT_BY_NAME)
+    Call<List<Product>> getProductsByName(@Query("q") String tenSanPham);
+
+    @GET(ManagerUrl.GET_PRODUCT)
     @DELETE(ManagerUrl.DELETE_CONTRACT_DETAIL_BY_CONTRACT_DETAIL_ID)
     Call<ServerResponse> deleteContractDetailByContractDetailID(@Path("contractDetailID") String contractDetailID);
 

@@ -11,10 +11,13 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.Toast;
@@ -30,6 +33,7 @@ import com.example.studiowedding.view.activity.product.AddProductActivity;
 import com.example.studiowedding.view.activity.task.ResponseTask;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -61,6 +65,7 @@ public class ProductServiceFragment extends Fragment implements OnItemClickListn
     }
 
     RecyclerView rcvProducts;
+    EditText searchEditext ;
     FloatingActionButton fabAddProduct ;
     public static ProductServiceFragment newInstance(String param1, String param2) {
         ProductServiceFragment fragment = new ProductServiceFragment();
@@ -79,6 +84,12 @@ public class ProductServiceFragment extends Fragment implements OnItemClickListn
     }
 
     @Override
+    public void onPause() {
+        searchEditext.setText("");
+        super.onPause();
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
@@ -91,6 +102,37 @@ public class ProductServiceFragment extends Fragment implements OnItemClickListn
         rcvProducts = view.findViewById(R.id.rcvProduct);
         rcvProducts.setLayoutManager(linearLayoutManager);
         fabAddProduct = view.findViewById(R.id.fabService);
+        searchEditext = view.findViewById(R.id.et_search_task);
+        searchEditext.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int start, int count, int after) {
+                // Trước khi văn bản thay đổi
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
+                // Trong quá trình văn bản thay đổi
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                String searchText = editable.toString();
+                ApiClient.getClient().create(ApiService.class).getProductsByName(searchText).enqueue(new Callback<List<Product>>() {
+                    @Override
+                    public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
+                        if(response.body()!=null){
+                            dataList = response.body();
+                            fillData(response.body());
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<Product>> call, Throwable t) {
+
+                    }
+                });
+            }
+        });
         fabAddProduct.setOnClickListener(v->{
             startActivity(new Intent(getContext(), AddProductActivity.class));
         });
@@ -106,11 +148,11 @@ public class ProductServiceFragment extends Fragment implements OnItemClickListn
                 case R.id.menu_yellow:
                     // Xử lý khi chọn màu vàng
                     // Ví dụ: thay đổi màu của ImageView thành màu vàng
+                    fillData(filterByStatus("Chưa sẵn sàng"));
                     ((ImageView) view).setColorFilter(getResources().getColor(R.color.yellow));
                     return true;
                 case R.id.menu_green:
-                    // Xử lý khi chọn màu xanh
-                    // Ví dụ: thay đổi màu của ImageView thành màu xanh
+                    fillData(filterByStatus("Sẵn sàng"));
                     ((ImageView) view).setColorFilter(getResources().getColor(R.color.green));
                     return true;
                 case R.id.menu_red:
@@ -163,6 +205,7 @@ public class ProductServiceFragment extends Fragment implements OnItemClickListn
             @Override
             public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
                if(response.body().size()>0){
+                   dataList = response.body();
                    fillData(response.body());
                }
             }
@@ -177,5 +220,13 @@ public class ProductServiceFragment extends Fragment implements OnItemClickListn
         ProductAdapter productAdapter = new ProductAdapter(listProduct);
         rcvProducts.setAdapter(productAdapter);
     }
-
+    private  List<Product> filterByStatus(String targetStatus) {
+        List<Product> filteredProducts = new ArrayList<>();
+        for (Product product : dataList) {
+            if (targetStatus.equals(product.getStatus())) {
+                filteredProducts.add(product);
+            }
+        }
+        return filteredProducts;
+    }
 }

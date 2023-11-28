@@ -42,6 +42,7 @@ public class ManagerUrl {
     public static final String UPDATE_TASKS = "update/task/{id}";
     public static final String DELETE_TASKS = "delete/task/{id}";
     public static final String GET_PRODUCT = "products";
+    public static final String GET_PRODUCT_BY_NAME= "products/search";
     public static final String DELETE_PRODUCT = "products/delete/{id}";
     public static final String ADD_PRODUCT = "products/add";
     public static final String UPDATE_PRODUCT = "products/update/{idSanPham}";
