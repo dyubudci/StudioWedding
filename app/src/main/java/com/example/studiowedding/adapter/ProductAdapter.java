@@ -2,6 +2,8 @@ package com.example.studiowedding.adapter;// ExampleAdapter.java
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,6 +15,7 @@ import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.studiowedding.R; // Thêm dòng này nếu chưa thêm
 import com.example.studiowedding.model.Product;
 import com.example.studiowedding.network.ApiClient;
@@ -43,7 +46,26 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ExampleV
     public void onBindViewHolder(ExampleViewHolder holder, @SuppressLint("RecyclerView") int position) {
         Product currentItem = dataList.get(position);
         holder.tvgiavay.setText(currentItem.getPrice() + "");
+        if(currentItem.getStatus().trim().equals("Sẵn sàng")){
+            String hexColor = "#226403"; // Ví dụ màu cam
+            int color = Color.parseColor(hexColor);
+            holder.tvtrangthai.setTextColor(color);
+        }else if (currentItem.getStatus().trim().equals("Chưa sẵn sàng")){
+            String hexColor = "#D83C3C"; // Ví dụ màu cam
+            int color = Color.parseColor(hexColor);
+            holder.tvtrangthai.setTextColor(color);
+        }else{
+            String hexColor = "#E1D140"; // Ví dụ màu cam
+            int color = Color.parseColor(hexColor);
+            holder.tvtrangthai.setTextColor(color);
+        }
         holder.tvtrangthai.setText(currentItem.getStatus());
+        Log.d("123", "1 "+ holder.imgProduct);
+        if(currentItem.getImgUrl()!=null){
+            Glide.with( holder.itemView.getContext())
+                    .load(currentItem.getImgUrl())
+                    .into(holder.imgProduct);
+        }
         holder.tvvaycuoi.setText(currentItem.getName());
         holder.imgMenu.setOnClickListener(v -> {
             PopupMenu popupMenu = new PopupMenu(v.getContext(), holder.imgMenu);
@@ -94,6 +116,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ExampleV
         public TextView tvtrangthai;
         public TextView tvgiavay;
         ImageView imgMenu;
+        ImageView imgProduct;
 
         public ExampleViewHolder(View itemView) {
             super(itemView);
@@ -101,6 +124,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ExampleV
             tvtrangthai = itemView.findViewById(R.id.tvtrangthai);
             tvgiavay = itemView.findViewById(R.id.tvgiavay);
             imgMenu = itemView.findViewById(R.id.img_pop_product);
+            imgProduct = itemView.findViewById(R.id.imgProduct);
+            Log.d("123", "ExampleViewHolder: "+imgProduct);
         }
     }
 

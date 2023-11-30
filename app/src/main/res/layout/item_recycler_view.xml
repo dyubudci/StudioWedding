@@ -30,13 +30,12 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
         <ImageView
+            android:id="@+id/imgProduct"
             android:layout_margin="10dp"
-            android:layout_width="0dp"
+            android:layout_width="100dp"
             android:gravity="center"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_height="100dp"
             android:src="@drawable/img_vaycuoi"
-
             />
         </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -8,8 +8,10 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
@@ -26,42 +28,59 @@ import com.example.studiowedding.databinding.ActivityAddProductBinding;
 import com.example.studiowedding.model.Product;
 import com.example.studiowedding.network.ApiClient;
 import com.example.studiowedding.network.ApiService;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.normal.TedPermission;
 
 import java.io.ByteArrayOutputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class AddProductActivity extends AppCompatActivity {
+    ProgressDialog pd;
     ActivityAddProductBinding viewBinding;
     Product product = null;
-    String base64Image;
+    String imageUrl = "";
     ActivityResultLauncher<PickVisualMediaRequest> pickMedia;
+    private StorageReference storageReference;
 
     @Override
     protected void onStart() {
         pickMedia =
                 registerForActivityResult(new ActivityResultContracts.PickVisualMedia(), uri -> {
                     if (uri != null) {
-                        Glide.with(AddProductActivity.this)
-                                .asBitmap()
+                        pd.show();
+                        Glide.with(this)
                                 .load(uri)
-                                .into(new CustomTarget<Bitmap>() {
+                                .into(viewBinding.imgPopProduct);
+                        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault());
+                        String imageName = sdf.format(new Date());
+                        storageReference = FirebaseStorage.getInstance().getReference("/images/" + imageName);
+                        storageReference.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                            @Override
+                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                Log.d("123", taskSnapshot.toString());
+                                storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                     @Override
-                                    public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
-                                        base64Image = encodeImageToBase64(resource);
-                                        viewBinding.imgPopProduct.setImageBitmap(resource);
-                                    }
-
-                                    @Override
-                                    public void onLoadCleared(@Nullable Drawable placeholder) {
+                                    public void onSuccess(Uri downloadUri) {
+                                        // Handle the download URL, for example, display it in a TextView or load it into an ImageView
+                                        String imageUrl = downloadUri.toString();
+                                        AddProductActivity.this.imageUrl = imageUrl;
+                                        pd.hide();
                                     }
                                 });
-
+                            }
+                        });
                         Log.d("PhotoPicker", "Selected URI: " + uri);
                     } else {
                         Log.d("PhotoPicker", "No media selected");
@@ -72,6 +91,9 @@ public class AddProductActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        pd = new ProgressDialog(AddProductActivity.this);
+        pd.setMessage("loading");
+        FirebaseApp.initializeApp(this);
         viewBinding = ActivityAddProductBinding.inflate(getLayoutInflater());
         super.onCreate(savedInstanceState);
         product = (Product) getIntent().getSerializableExtra("product");
@@ -153,9 +175,9 @@ public class AddProductActivity extends AppCompatActivity {
         ApiClient.getClient().create(ApiService.class).addProduct(new Product(
                         viewBinding.edProductName.getText().toString(),
                         Float.parseFloat(viewBinding.edProductPrice.getText().toString()),
-                (String) viewBinding.spStatus.getSelectedItem(),
+                        (String) viewBinding.spStatus.getSelectedItem(),
                         (String) viewBinding.spProduct.getSelectedItem(),
-                        base64Image
+                        imageUrl
 
                 )).
                 enqueue(new Callback<Void>() {
@@ -182,7 +204,7 @@ public class AddProductActivity extends AppCompatActivity {
                         Float.parseFloat(viewBinding.edProductPrice.getText().toString()),
                         (String) viewBinding.spStatus.getSelectedItem(),
                         (String) viewBinding.spProduct.getSelectedItem(),
-                        base64Image)).
+                        imageUrl)).
                 enqueue(new Callback<Void>() {
                     @Override
                     public void onResponse(Call<Void> call, Response<Void> response) {
@@ -197,10 +219,5 @@ public class AddProductActivity extends AppCompatActivity {
                 });
     }
 
-    private String encodeImageToBase64(Bitmap bitmap) {
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
-        byte[] imageBytes = byteArrayOutputStream.toByteArray();
-        return Base64.encodeToString(imageBytes, Base64.DEFAULT);
-    }
+
 }
