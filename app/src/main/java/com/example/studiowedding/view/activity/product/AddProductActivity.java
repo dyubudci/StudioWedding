@@ -29,6 +29,7 @@ import com.example.studiowedding.model.Product;
 import com.example.studiowedding.network.ApiClient;
 import com.example.studiowedding.network.ApiService;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -41,6 +42,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -97,10 +100,21 @@ public class AddProductActivity extends AppCompatActivity {
         viewBinding = ActivityAddProductBinding.inflate(getLayoutInflater());
         super.onCreate(savedInstanceState);
         product = (Product) getIntent().getSerializableExtra("product");
+        viewBinding.backImageView.setOnClickListener(v->{
+            onBackPressed();
+        });
         if (product != null) {
             viewBinding.edProductName.setText(product.getName());
             viewBinding.edProductPrice.setText(product.getPrice() + "");
             viewBinding.btnAddProduct.setText("Cập nhật");
+            if(!product.getImgUrl().equals("")){
+                Glide.with( this)
+                        .load(product.getImgUrl())
+                        .into(viewBinding.imgPopProduct);
+            }
+
+        } else {
+            viewBinding.constraintLayout12.setVisibility(View.GONE);
         }
         requestPermission();
         viewBinding.spStatus.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -117,6 +131,7 @@ public class AddProductActivity extends AppCompatActivity {
         setContentView(viewBinding.getRoot());
     }
 
+
     @Override
     protected void onResume() {
         String[] productArray = getResources().getStringArray(R.array.product_array);
@@ -128,7 +143,47 @@ public class AddProductActivity extends AppCompatActivity {
         adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         viewBinding.spStatus.setAdapter(adapter2);
         viewBinding.btnAddProduct.setOnClickListener(v -> {
+            if (imageUrl.equals("")) {
+                Snackbar snackbar = Snackbar.make(viewBinding.btnAddProduct, "Vui lòng chọn ảnh sản phẩm", Snackbar.LENGTH_LONG);
+                snackbar.setAction("OK", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        snackbar.dismiss();
+                    }
+                });
+
+                // Hiển thị Snackbar
+                snackbar.show();
+                return;
+            }
+            if(!isValidProductName(viewBinding.edProductName.getText().toString())){
+                Snackbar snackbar = Snackbar.make(viewBinding.btnAddProduct, "Vui lòng nhập tên sản phẩm hợp lệ", Snackbar.LENGTH_LONG);
+                snackbar.setAction("OK", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        snackbar.dismiss();
+                    }
+                });
+
+                // Hiển thị Snackbar
+                snackbar.show();
+                return;
+            }
+            if(viewBinding.edProductPrice.getText().toString().equals("")){
+                Snackbar snackbar = Snackbar.make(viewBinding.btnAddProduct, "Vui lòng nhập giá tiền", Snackbar.LENGTH_LONG);
+                snackbar.setAction("OK", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        snackbar.dismiss();
+                    }
+                });
+
+                // Hiển thị Snackbar
+                snackbar.show();
+                return;
+            }
             if (product != null) {
+
                 updateProduct();
                 return;
             }
@@ -137,6 +192,7 @@ public class AddProductActivity extends AppCompatActivity {
         viewBinding.cvProduct.setOnClickListener(v -> {
             getImage();
         });
+
         super.onResume();
     }
 
@@ -219,5 +275,11 @@ public class AddProductActivity extends AppCompatActivity {
                 });
     }
 
+   private  boolean isValidProductName(String productName) {
+        String regex = "^[a-zA-Z]+[a-zA-Z0-9]*$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(productName);
+        return matcher.matches();
+    }
 
 }

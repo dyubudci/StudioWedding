@@ -18,10 +18,11 @@
         android:orientation="horizontal"
         tools:ignore="MissingConstraints"
         android:gravity="center">
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <androidx.cardview.widget.CardView
+            app:cardCornerRadius="50dp"
             android:id="@+id/constraintLayout2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_marginStart="10dp"
             android:layout_marginTop="14dp"
             android:layout_marginBottom="14dp"
@@ -31,13 +32,12 @@
             app:layout_constraintTop_toTopOf="parent">
         <ImageView
             android:id="@+id/imgProduct"
-            android:layout_margin="10dp"
             android:layout_width="100dp"
             android:gravity="center"
             android:layout_height="100dp"
             android:src="@drawable/img_vaycuoi"
             />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout"
