@@ -2,12 +2,12 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@drawable/item_bgr_job"
-    android:layout_marginTop="14dp"
-    android:layout_marginStart="16dp"
-    android:layout_marginEnd="16dp"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_marginStart="16dp"
+    android:layout_marginTop="14dp"
+    android:layout_marginEnd="16dp"
+    android:background="@drawable/item_bgr_job">
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -15,28 +15,29 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
 
+        android:gravity="center"
         android:orientation="horizontal"
-        tools:ignore="MissingConstraints"
-        android:gravity="center">
+        tools:ignore="MissingConstraints">
+
         <androidx.cardview.widget.CardView
-            app:cardCornerRadius="50dp"
             android:id="@+id/constraintLayout2"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_marginStart="10dp"
             android:layout_marginTop="14dp"
             android:layout_marginBottom="14dp"
+            app:cardCornerRadius="50dp"
 
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
-        <ImageView
-            android:id="@+id/imgProduct"
-            android:layout_width="100dp"
-            android:gravity="center"
-            android:layout_height="100dp"
-            android:src="@drawable/img_vaycuoi"
-            />
+
+            <ImageView
+                android:id="@+id/imgProduct"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:gravity="center"
+                android:src="@drawable/img_vaycuoi" />
         </androidx.cardview.widget.CardView>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -50,29 +51,27 @@
             app:layout_constraintTop_toTopOf="@+id/constraintLayout2"
             app:layout_constraintVertical_bias="0.0">
 
-
             <TextView
                 android:id="@+id/tvvaycuoi"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:fontFamily="@font/inter_bold"
-
+                android:text="123123"
                 android:textColor="@color/black"
                 android:textSize="15sp"
                 app:layout_constraintEnd_toStartOf="@+id/img_pop_product"
-                app:layout_constraintHorizontal_bias="0.378"
+                app:layout_constraintHorizontal_bias="0.2"
                 app:layout_constraintStart_toStartOf="parent"
-
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-
                 android:id="@+id/tvgiavay"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
+                android:layout_marginTop="8dp"
                 android:fontFamily="@font/inter_light"
+                android:text="123123"
 
 
                 android:textColor="@color/black"
@@ -83,12 +82,12 @@
                 app:layout_constraintTop_toBottomOf="@+id/img_pop_product" />
 
             <TextView
-
                 android:id="@+id/tvtrangthai"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
+                android:layout_marginTop="8dp"
                 android:fontFamily="@font/inter_regular"
+                android:text="123123"
 
                 android:textColor="#FF0000"
                 android:textSize="15sp"
